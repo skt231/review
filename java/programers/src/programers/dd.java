@@ -4,19 +4,14 @@ public class dd {
 	int k = 0;
 
 	public static void main(String[] args) {
-		int a = 2;
-		int b = 3;
-		int c = 1;
+		int [] a= {1,3,5,4,7,9,6};
+		int temp=a[0];
 		
-		int answer = 0;
-		if (a != b && b != c && a != c) {
-			answer = a + b + c;
-		} else if ((a != b && b != c && a == c) || (a != b && b == c && a != c) || (a == b && b != c && a != c)) {
-			answer = (int) ((a + b + c) * (Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2)));
-		} else if (a == b && b == c && a == c) {
-			answer = (int) ((a + b + c) * (Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2))
-					* (Math.pow(a, 3) + Math.pow(b, 3) + Math.pow(c, 3)));
+		for(int i=0;i<a.length;i++) {
+			if(a[i]<temp) {
+				temp=a[i];
+			}
 		}
-		System.out.println(answer);
+		System.out.println(temp);
 	}
 }
