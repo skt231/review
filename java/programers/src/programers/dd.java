@@ -4,14 +4,18 @@ public class dd {
 	int k = 0;
 
 	public static void main(String[] args) {
-		int [] a= {1,3,5,4,7,9,6};
-		int temp=a[0];
-		
-		for(int i=0;i<a.length;i++) {
-			if(a[i]<temp) {
-				temp=a[i];
+		int a=12;
+		int temp=0;
+		int cnt=0;
+		for(int i=0;i<a/2;i++) {
+			a /=2;
+			cnt++;
+			if(a %2 !=0) {
+				a /=a;
+				cnt++;
 			}
 		}
-		System.out.println(temp);
+		System.out.println(a);
+		System.out.println(cnt);
 	}
 }
