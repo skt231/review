@@ -36,26 +36,41 @@ public class process_Code {
 
 	public static void main(String[] args) {
 
-		solution("abc1abc1abc");
+		System.out.println(solution("abc1abc1abc"));
 	}
 
 	public static String solution(String code) {
-		String answer = "";
-		int mode = 0;
-		String[] arr_code = code.split("");
-		String ret = "";
-		for (int i = 0; i < arr_code.length; i++) {
-			if (arr_code[i].matches("[-+]?\\d*\\.?\\d+")) {
-				if (mode == 0) {
-					if (i % 2 == 0) {
-						ret += arr_code[i];
-					}
-				} else if (mode == 1) {
-
-				}
-			}
-		}
-		return answer;
+		 String answer = "";
+	        int mode = 0;
+	        
+	        for(int i = 0; i < code.length(); i++) {
+	            String a = code.substring(i, i+1);
+	            
+	            if(mode == 0) {
+	                if(!a.equals("1")) {
+	                    if((i % 2 == 0)) {
+	                        answer += a;
+	                    }
+	                } else {
+	                    mode = 1;
+	                }
+	            } else {
+	                if(!a.equals("1")) {
+	                    if((i % 2 == 1)) {
+	                        answer += a;
+	                    }
+	                } else {
+	                    mode = 0;
+	                }
+	            }
+	            
+	        }
+	        
+	        if(answer.equals("")) {
+	            answer = "EMPTY";
+	        }
+	        
+	        return answer;
 	}
 
 }
