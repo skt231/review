@@ -24,7 +24,7 @@
 	<GlobalNamingResources>
 		<!-- Editable user database that can also be used by UserDatabaseRealm 
 			to authenticate users -->
-		<Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" initialSize="0" maxIdle="20" maxTotal="20" maxWaitMillis="5000" minIdle="5" name="dbcp_myoracle" password="humans" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="c##human"/>
+		<Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" initialSize="0" maxIdle="20" maxTotal="20" maxWaitMillis="5000" minIdle="5" name="dbcp_myoracle" password="human" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="c##human"/>
 	</GlobalNamingResources>
 
 	<!-- A "Service" is a collection of one or more "Connectors" that share 
@@ -104,7 +104,7 @@
 
 
 				
-			<Context docBase="jsp001html" path="/jsp001html" reloadable="true" source="org.eclipse.jst.jee.server:jsp001html"/><Context docBase="jsp02namePrint" path="/jsp02namePrint" reloadable="true" source="org.eclipse.jst.jee.server:jsp02namePrint"/></Host>
+			<Context docBase="jsp01html" path="/jsp01html" reloadable="true" source="org.eclipse.jst.jee.server:jsp01html"/></Host>
 		</Engine>
 	</Service>
 </Server>
