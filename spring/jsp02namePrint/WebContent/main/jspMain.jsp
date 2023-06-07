@@ -7,19 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%
-		for (int i = 0; i < 5; i++) {
-	%>
-	안녕하세요
+	<a href='../sub/jspSub.jsp'>jspsub</a>
 	<br>
-	<%
-		}
-	%>
-	<%
-		out.println("hello jsp?<br>");
-	%>
-	hello jsp! 0번
-	<a href='sub/b.html'>서브 페이지</a>
-	<img src='img/k.jpg'>
+	<a href='../sub/subHtml.html'>subHtml</a>
+	<br>
+	<a href='../subServlet'>subServlet</a>
+	<br>
 </body>
 </html>
