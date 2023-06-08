@@ -22,25 +22,21 @@ public class Sequence_and_Interval_Queries_2 {
 
 	public static int[] solution(int[] arr, int[][] queries) {
 		int[] answer = new int[queries.length];
-		int sum=0;
-		for(int i=0;i<arr.length;i++) {
-			sum +=arr[i];
-		}
+		Arrays.fill(answer, -1);
+		System.out.println(Arrays.toString(answer));
 		for (int i = 0; i < queries.length; i++) {
-			for (int k = 0; k < arr.length; k++) {
-				int j = 0;
-				if (arr[queries[i][j]] <= arr[k] && arr[queries[i][j + 1]] >= arr[k] && arr[k] > queries[i][j + 2]) {
-//					if(arr[k]>queries[i][j])
-					if (arr[k] < sum/2) {
-						answer[i] = arr[k];
-						break;
+			int ts = queries[i][0];
+			for (int j = queries[i][0]; j <= queries[i][1]; j++) {
+				if (arr[j] > queries[i][2]) {
+					if (answer[i] == -1 || arr[j] < ts) {
+						ts = arr[j];
+						answer[i] = ts;
 					}
-				} else {
-					answer[i] = -1;
+
 				}
 			}
-		}
 
+		}
 		return answer;
 	}
 
