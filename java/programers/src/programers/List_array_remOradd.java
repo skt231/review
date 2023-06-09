@@ -8,7 +8,7 @@ package programers;
 import java.util.ArrayList;
 import java.util.List;
 
-public class dd {
+public class List_array_remOradd {
 	int k = 0;
 
 	public static void main(String[] args) {
