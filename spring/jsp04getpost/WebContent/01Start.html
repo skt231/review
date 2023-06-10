@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="GetServlet" method="get">
+		data1:<input type="text" name="data1"><br> data2:<input
+			type="text" name="data2"><br> data2:<input type="text"
+			name="data2"><br> <input type="submit" value="전송"><br>
+	</form>
+	2번방법 a태그 사용
+	<br>
+	<a
+		href=" http://localhost:8081/jsp04getpost/GetServlet?data1=a&data2=b&
+data2=c">
+		3번방법 브라우저 사용 사용<br>
+	</a>
+	<br> 18 브라우저에 다음과 같이 입력하고 전송 버튼을 누름
+	<br>
+	http://localhost:8081/jsp04getpost/GetServlet?data1=a&data2=b&data2=c
+	<br> servlet post방식으로 데이터전송
+	<br> 1번방법 form태그 사용
+	<br>
+	<form action="GetServlet" method="post">
+		data1:<input type="text" name="data1"><br> data2:<input
+			type="text" name="data2"><br> data2:<input type="text"
+			name="data2"><br> <input type="submit" value="전송"><br>
+	</form>
+	<BR> 다음은 JSP로 사용자 입력 데이터를 처리하는 방법이다.
+	<br> jsp전송 get
+	<br>
+	<form action="GetServlet.jsp" method="get">
+		data1:<input type="text" name="data1"><br> data2:<input
+			type="text" name="data2"><br> data2:<input type="text"
+			name="data2"><br> <input type="submit" value="전송"><br>
+	</form>
+	<br> jsp전송 post
+	<br>
+	<form action="GetServlet.jsp" method="post">
+		data1:<input type="text" name="data1"><br> data2:<input
+			type="text" name="data2"><br> data2:<input type="text"
+			name="data2"><br> <input type="submit" value="전송"><br>
+	</form>
+</body>
+</html>
