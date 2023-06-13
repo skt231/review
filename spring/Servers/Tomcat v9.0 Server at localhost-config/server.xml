@@ -105,7 +105,7 @@
 
 
 				
-			<Context docBase="jsp02namePrint" path="/jsp02namePrint" reloadable="true" source="org.eclipse.jst.jee.server:jsp02namePrint"/><Context docBase="jsp03moonbub" path="/jsp03moonbub" reloadable="true" source="org.eclipse.jst.jee.server:jsp03moonbub"/><Context docBase="jsp04getpost" path="/jsp04getpost" reloadable="true" source="org.eclipse.jst.jee.server:jsp04getpost"/></Host>
+			<Context docBase="jsp02namePrint" path="/jsp02namePrint" reloadable="true" source="org.eclipse.jst.jee.server:jsp02namePrint"/><Context docBase="jsp03moonbub" path="/jsp03moonbub" reloadable="true" source="org.eclipse.jst.jee.server:jsp03moonbub"/><Context docBase="jsp04getpost" path="/jsp04getpost" reloadable="true" source="org.eclipse.jst.jee.server:jsp04getpost"/><Context docBase="jsp05RedirectDispatcher" path="/jsp05RedirectDispatcher" reloadable="true" source="org.eclipse.jst.jee.server:jsp05RedirectDispatcher"/></Host>
 		</Engine>
 	</Service>
 </Server>
