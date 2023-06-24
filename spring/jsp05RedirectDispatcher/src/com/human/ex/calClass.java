@@ -35,18 +35,29 @@ public class calClass extends HttpServlet {
 		String num2 = request.getParameter("num2");
 		String operator = request.getParameter("operator");
 		int result = 0;
-		if (operator.equals("+")) {
-			result = Integer.parseInt(num1) + Integer.parseInt(num2);
-		} else if (operator.equals("-")) {
-			result = Integer.parseInt(num1) - Integer.parseInt(num2);
-		} else if (operator.equals("*")) {
-			result = Integer.parseInt(num1) * Integer.parseInt(num2);
-		} else if (operator.equals("/")) {
-			result = Integer.parseInt(num1) / Integer.parseInt(num2);
-		}
-		request.setAttribute("request", request);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("calculator.jsp");
-		dispatcher.forward(request, response);
+
+		 if (num1 != null && num2 != null && operator != null) {
+		        try {
+		            int operand1 = Integer.parseInt(num1);
+		            int operand2 = Integer.parseInt(num2);
+
+		            if (operator.equals("+")) {
+		                result = operand1 + operand2;
+		            } else if (operator.equals("-")) {
+		                result = operand1 - operand2;
+		            } else if (operator.equals("*")) {
+		                result = operand1 * operand2;
+		            } else if (operator.equals("/")) {
+		                result = operand1 / operand2;
+		            }
+		        } catch (NumberFormatException e) {
+		            e.printStackTrace();
+		        }
+		    }
+
+		 request.setAttribute("result", result);
+		    RequestDispatcher dispatcher = request.getRequestDispatcher("calculator.jsp");
+		    dispatcher.forward(request, response);
 	}
 
 	/**
