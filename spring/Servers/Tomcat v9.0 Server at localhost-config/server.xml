@@ -105,7 +105,7 @@
 
 
 				
-			<Context docBase="jsp05RedirectDispatcher" path="/jsp05RedirectDispatcher" reloadable="true" source="org.eclipse.jst.jee.server:jsp05RedirectDispatcher"/></Host>
+			<Context docBase="jsp05RedirectDispatcher" path="/jsp05RedirectDispatcher" reloadable="true" source="org.eclipse.jst.jee.server:jsp05RedirectDispatcher"/><Context docBase="jsp06cookie_Session" path="/jsp06cookie_Session" reloadable="true" source="org.eclipse.jst.jee.server:jsp06cookie_Session"/></Host>
 		</Engine>
 	</Service>
 </Server>
