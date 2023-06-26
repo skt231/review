@@ -9,33 +9,13 @@ public class dd {
 	int k = 0;
 
 	public static void main(String[] args) {
-		char A = 'A';
-		String b = "apporoograpemmemprs";
-		List<Character> answer = new ArrayList<>();
-		b=b.replace('a', 'b');
-
-		System.out.println(b);
+		List<Integer> answer = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			answer.add(i+2);//[2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+		}
+		answer.remove(0);
+		answer.remove(1);
+		System.out.println(answer);
+		
 	}
-	public List<Integer> solution(int n, int[] slicer, int[] num_list) {
-	    List<Integer> answer = new ArrayList<>();
-	    if(n == 1){
-	        for(int i = slicer[0]; i <= slicer[1]; i++){
-	            answer.add(num_list[i]);
-	        }
-	    }else if(n == 2){
-	        for(int i = slicer[0]; i < num_list.length; i++){
-	            answer.add(num_list[i]);
-	        }
-	    }else if(n == 3){
-	        for(int i = slicer[0]; i <= slicer[1]; i++){
-	            answer.add(num_list[i]);
-	        }
-	    }else if(n == 4){
-	        for(int i = slicer[0]; i <= slicer[1]; i += slicer[2]){
-	            answer.add(num_list[i]);
-	        }
-	    }
-	    return answer;
-	}
-
 }
