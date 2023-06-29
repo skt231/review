@@ -105,7 +105,7 @@
 
 
 				
-			<Context docBase="jsp05RedirectDispatcher" path="/jsp05RedirectDispatcher" reloadable="true" source="org.eclipse.jst.jee.server:jsp05RedirectDispatcher"/><Context docBase="jsp06cookie_Session" path="/jsp06cookie_Session" reloadable="true" source="org.eclipse.jst.jee.server:jsp06cookie_Session"/><Context docBase="jsp06login" path="/jsp06login" reloadable="true" source="org.eclipse.jst.jee.server:jsp06login"/></Host>
+			<Context docBase="jsp05RedirectDispatcher" path="/jsp05RedirectDispatcher" reloadable="true" source="org.eclipse.jst.jee.server:jsp05RedirectDispatcher"/><Context docBase="jsp06cookie_Session" path="/jsp06cookie_Session" reloadable="true" source="org.eclipse.jst.jee.server:jsp06cookie_Session"/><Context docBase="jsp06login" path="/jsp06login" reloadable="true" source="org.eclipse.jst.jee.server:jsp06login"/><Context docBase="jsp07frontcontroller" path="/jsp07frontcontroller" reloadable="true" source="org.eclipse.jst.jee.server:jsp07frontcontroller"/><Context docBase="jsp08CookieToFrontcontroller" path="/jsp08CookieToFrontcontroller" reloadable="true" source="org.eclipse.jst.jee.server:jsp08CookieToFrontcontroller"/></Host>
 		</Engine>
 	</Service>
 </Server>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>쿠키 생성</h1>
+	<form action="Create.Servlet">
+		name : <input type="text" name="name"><br> value : <input
+			type="text" name="value"><br> <input type="submit"
+			value="쿠키 생성">
+	</form>
+	<hr>
+	<h1>쿠키 조회</h1>
+	<form action="Read.Servlet">
+		<input type="submit" value="쿠키조회">
+	</form>
+	<hr>
+	<h1>쿠키 업데이트</h1>
+	<form action="Update.Servlet">
+		쿠키 이름 : <input type="text" name="name"> 변경할 value : <input
+			type="text" name="updateValue"> <input type="submit" value="변경하기">
+	</form>
+	<hr>
+	<h1>쿠키 삭제</h1>
+	<form action="Delete.Servlet">
+		삭제할 이름 : <input type="text" name="delName"><br>
+		<input type="submit" value="삭제하기">
+	</form>
+	<br>
+</body>
+</html>
