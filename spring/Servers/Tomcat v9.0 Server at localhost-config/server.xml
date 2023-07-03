@@ -24,7 +24,7 @@
 	<GlobalNamingResources>
 		<!-- Editable user database that can also be used by UserDatabaseRealm 
 			to authenticate users -->
-		<Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" initialSize="0" maxIdle="20" maxTotal="20" maxWaitMillis="5000" minIdle="5" name="dbcp_myoracle" password="human" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="c##human"/>
+		<Resource auth="Container" driverClassName="oracle.jdbc.OracleDriver" initialSize="0" maxIdle="20" maxTotal="20" maxWaitMillis="5000" minIdle="5" name="dbcp_myoracle" password="test" type="javax.sql.DataSource" url="jdbc:oracle:thin:@localhost:1521:xe" username="c##test"/>
 		<Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
 	</GlobalNamingResources>
 	<!-- A "Service" is a collection of one or more "Connectors" that share 
@@ -105,7 +105,7 @@
 
 
 				
-			<Context docBase="jsp05RedirectDispatcher" path="/jsp05RedirectDispatcher" reloadable="true" source="org.eclipse.jst.jee.server:jsp05RedirectDispatcher"/><Context docBase="jsp06cookie_Session" path="/jsp06cookie_Session" reloadable="true" source="org.eclipse.jst.jee.server:jsp06cookie_Session"/><Context docBase="jsp06login" path="/jsp06login" reloadable="true" source="org.eclipse.jst.jee.server:jsp06login"/><Context docBase="jsp07frontcontroller" path="/jsp07frontcontroller" reloadable="true" source="org.eclipse.jst.jee.server:jsp07frontcontroller"/><Context docBase="jsp08CookieToFrontcontroller" path="/jsp08CookieToFrontcontroller" reloadable="true" source="org.eclipse.jst.jee.server:jsp08CookieToFrontcontroller"/></Host>
+			<Context docBase="06board" path="/ex" reloadable="true" source="org.eclipse.jst.jee.server:06board"/></Host>
 		</Engine>
 	</Service>
 </Server>
