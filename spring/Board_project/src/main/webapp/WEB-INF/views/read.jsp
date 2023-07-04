@@ -3,22 +3,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	$(document).ready(function() {
 		var formObj = $("form[role='form']");
 		console.log(formObj);
 		$(".btn-warning").on("click", function() {
-			formObj.attr("action", "/ex/board/modify");
+			formObj.attr("action", "/ex/modify");
 			formObj.attr("method", "get");
 			formObj.submit();
 		});
 		$(".btn-danger").on("click", function() {
-			formObj.attr("action", "/ex/board/remove");
+			formObj.attr("action", "/ex/remove");
 			formObj.submit();
 		});
 		$(".btn-primary").on("click", function() {
-			self.location = "/ex/board/listAll";
+			self.location = "/ex/listAll";
 		});
 	});
 </script>

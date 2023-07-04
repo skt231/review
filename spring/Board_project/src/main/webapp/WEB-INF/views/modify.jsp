@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="main">
 	<form role="form" method="post">
 		<div class="box-body">
@@ -26,6 +27,7 @@
 		<!-- /.box-body -->
 	</form>
 	<div class="box-footer">
+
 		<button type="submit" class="btn btn-primary">SAVE</button>
 		<button type="submit" class="btn btn-warning">CANCEL</button>
 	</div>
@@ -34,7 +36,7 @@
 			var formObj = $("form[role='form']");
 			console.log(formObj);
 			$(".btn-warning").on("click", function() {
-				self.location = "/ex/board/listAll";
+				self.location = "/ex/listAll";
 			});
 			$(".btn-primary").on("click", function() {
 				formObj.submit();

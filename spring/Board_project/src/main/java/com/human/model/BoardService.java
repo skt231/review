@@ -23,6 +23,7 @@ public class BoardService implements BoardServiceImpl {
 	@Override
 	public BoardDto read(Integer bno) throws Exception {
 		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		System.out.println(33);
 		return dao.read(bno);
 	}
 

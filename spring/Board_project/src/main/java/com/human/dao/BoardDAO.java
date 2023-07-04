@@ -14,4 +14,5 @@ public interface BoardDAO {
 	public void delete(Integer bno) throws Exception;
 
 	public List<BoardDto> listAll() throws Exception;
+
 }

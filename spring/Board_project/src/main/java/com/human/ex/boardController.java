@@ -15,7 +15,7 @@ import com.human.model.BoardService;
 
 public class boardController {
 	@Controller
-	@RequestMapping("/board/*")
+	@RequestMapping("/")
 	public static class BoardController {
 		private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 		@Autowired
@@ -32,7 +32,7 @@ public class boardController {
 			logger.info(board.toString());
 			service.regist(board);
 			rttr.addFlashAttribute("msg", "success");
-			return "redirect:/board/listAll";
+			return "redirect:/listAll";
 		}
 
 		@RequestMapping(value = "/listAll", method = RequestMethod.GET)
@@ -51,7 +51,7 @@ public class boardController {
 		public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr) throws Exception {
 			service.remove(bno);
 			rttr.addFlashAttribute("msg", "success");
-			return "redirect:/board/listAll";
+			return "redirect:/listAll";
 		}
 
 		@RequestMapping(value = "/modify", method = RequestMethod.GET)
