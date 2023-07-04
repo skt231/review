@@ -105,7 +105,7 @@
 
 
 				
-			<Context docBase="06board" path="/ex" reloadable="true" source="org.eclipse.jst.jee.server:06board"/></Host>
+			<Context docBase="Board_project" path="/ex" reloadable="true" source="org.eclipse.jst.jee.server:Board_project"/></Host>
 		</Engine>
 	</Service>
 </Server>
