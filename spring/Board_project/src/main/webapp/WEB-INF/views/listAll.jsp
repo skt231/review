@@ -14,6 +14,31 @@
 			location.href = "/ex/register"
 		});
 	});
+	$(document).ready(
+			function() {
+				$('#searchBtn').on(
+						"click",
+						function(event) {
+							console.log("listAll" + '${pageMaker.makePage(1)}'
+									+ '&searchType='
+									+ $("select option:selected").val()
+									+ "&keyword=" + $('#keywordInput').val());
+
+							self.location = "listAll" + '${pageMaker.makePage(1)}'
+									+ '&searchType='
+									+ $("select option:selected").val()
+									+ "&keyword=" + $('#keywordInput').val();
+
+						})
+
+				$('.writeBtn').on("click", function(event) {
+					location.href = "/ex/write";
+				});
+				$('#newBtn').on("click", function(event) {
+					self.location = "write";
+				});
+
+			});
 </script>
 <div class="main">
 	<h1></h1>
@@ -63,32 +88,32 @@
 	<button class="btn">글쓰기</button>
 	<div class="pagination">
 		<c:if test="${pageMaker.page !=1}">
-			<a href='list${pageMaker.makeSearch(1)}'>&laquo;</a>
+			<a href='listAll${pageMaker.makeSearch(1)}'>&laquo;</a>
 		</c:if>
 		<!-- 앞전 page 모양을 클릭하면 pageMarker.startPage에 -1을 처리해준다.-->
 		<c:if test="${pageMaker.prev }">
-			<a href='list${pageMaker.makeSearch(pageMaker.startPage-1)}'>&lt;</a>
+			<a href='listAll${pageMaker.makeSearch(pageMaker.startPage-1)}'>&lt;</a>
 		</c:if>
 
 		<c:forEach begin="${pageMaker.startPage }" end="${ pageMaker.endPage}"
 			var="idx">
-			<a href='list${pageMaker.makeSearch(idx)}'
+			<a href='listAll${pageMaker.makeSearch(idx)}'
 				<c:out value="${pageMaker.page==idx?' class=active ':'' }"/>>
 				${idx}</a>
 		</c:forEach>
 
 		<%--<a href='#'>1</a>
-    	 <a href='list${pageMaker.makeSearch(2)}'>2</a>
+    	 <a href='listAllt${PageDto.makeSearch(2)}'>2</a>
     	<a href='#' class="active">3</a> --%>
 
 		<c:if test="${pageMaker.next }">
-			<a href='list${pageMaker.makeSearch(pageMaker.endPage+1)}'>&gt;</a>
+			<a href='listAll${pageMaker.makeSearch(pageMaker.endPage+1)}'>&gt;</a>
 
 		</c:if>
 
 
 		<c:if test="${pageMaker.page != pageMaker.totalEndPage}">
-			<a href='list${pageMaker.makeSearch(pageMaker.totalEndPage)}'>&raquo;</a>
+			<a href='listAll${pageMaker.makeSearch(pageMaker.totalEndPage)}'>&raquo;</a>
 		</c:if>
 
 	</div>

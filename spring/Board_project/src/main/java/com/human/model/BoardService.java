@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.human.dao.BoardDAO;
 import com.human.dto.BoardDto;
+import com.human.dto.PageDto;
+
 
 @Service
 public class BoardService implements BoardServiceImpl {
@@ -45,5 +47,23 @@ public class BoardService implements BoardServiceImpl {
 		List<BoardDto> dtos = dao.listAll();
 		System.out.println(dtos);
 		return dtos;
+	}
+
+	@Override
+	public void viewCount(int bno) throws Exception {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		dao.viewCount(bno);
+	}
+
+	@Override
+	public int listSearchCount(PageDto pm) throws Exception {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		return dao.listSearchCount(pm);
+	}
+
+	@Override
+	public List<BoardDto> listSearchCriteria(PageDto pm) throws Exception {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		return dao.listSearch(pm);
 	}
 }
