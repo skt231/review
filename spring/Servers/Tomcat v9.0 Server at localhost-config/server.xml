@@ -105,7 +105,7 @@
 
 
 				
-			<Context docBase="Board_pr_Re" path="/ex" reloadable="true" source="org.eclipse.jst.jee.server:Board_pr_Re"/></Host>
+			<Context docBase="Board_pr_completed" path="/ex" reloadable="true" source="org.eclipse.jst.jee.server:Board_pr_completed"/></Host>
 		</Engine>
 	</Service>
 </Server>
