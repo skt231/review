@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>raceRegisteration</title>
+</head>
+
+<body>
+    <h1>Race Registeration</h1>
+    <form action="r_Registeration_result.html">
+        <p>
+            <label for="firstN">firstname <input type="text" id="firstN" name="firstN" requierd></label>
+            <label for="lastN">firstname <input type="text" id="lastN" name="lastN" requierd></label><br>
+        </p>
+        <p>
+            select race :
+        </p>
+        <div>
+            <label for="5k">
+                <input type="radio" name="select_race" id="5k" value="5k" selected>fun Run 5K<br>
+            </label>
+            <label for="half">
+                <input type="radio" name="select_race" id="half" value="half">half marathon<br>
+            </label>
+            <label for="full">
+                <input type="radio" name="select_race" id="full" value="full">full marathon<br>
+            </label>
+        </div>
+        <p>
+            <label for="em">
+                email : <input type="email" id="em" name="em" required>
+            </label>
+            <label for="pw">
+                password : <input type="password" id="pw" name="pw" required>
+            </label>
+        </p>
+        <p>
+            select Age group :
+        </p>
+        <div>
+            <select name="age" id="age">
+                <option value="---">---</option>
+                <option value="10">10대</option>
+                <option value="20">20대</option>
+                <option value="30">30대</option>
+                <option value="40">40대</option>
+                <option value="50">50대</option>
+            </select>
+        </div>
+        <br>
+        <button>제출</button>
+    </form>
+</body>
+
+</html>
