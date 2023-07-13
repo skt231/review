@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+
+        div {
+            margin: 25px;
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+        }
+
+        #one {
+            background-color: #ffd6ff;
+        }
+
+        #middle {
+            background-color: #bbd0ff;
+        }
+
+        #three {
+            background-color: #c8b6ff;
+        }
+        #static #middle{
+            position: static;
+            top: 50px;
+        }
+        #relative #middle{
+            position: relative;
+            top: 50px;
+            left: 50px;
+        }
+        #absolute{
+            position: relative;
+        }
+        #absolute #middle{
+            position: absolute;
+            top: 0px;
+        }
+        #fixed #middle{
+            position: fixed;
+            top: 100px;
+        }
+        /* position :static /position/ relative /fixed/
+                   webkit-sticky (처음에는 평범 하지만 스크롤하면 fixed됨)
+ */
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Postion property</h1>
+    <section  id="static">
+        <h2>static</h2>
+        <div id="one"></div>
+        <div id="middle">static</div>
+        <div id="three"></div>
+    </section>
+    <section id="relative">
+        <h2 >relative</h2>
+        <div id="one"></div>
+        <div id="middle">relative</div>
+        <div id="three"></div>
+    </section>
+    <section id="absolute">
+        <h2 >absolute</h2>
+        <div id="one"></div>
+        <div id="middle">absolute</div>
+        <div id="three"></div>
+    </section>
+    <section id="fixed">
+        <h2 >absolute</h2>
+        <div id="one"></div>
+        <div id="middle">fixed</div>
+        <div id="three"></div>
+    </section>
+    
+</body>
+
+</html>
