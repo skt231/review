@@ -1,24 +1,21 @@
 package programers;
 
-/*a							b					result
-"582"						"734"				"1316"
-"18446744073709551615"	"287346502836570928366"	"305793246910280479981"
-"0"						"0"						"0"
-*/
-import java.math.BigInteger;
-
 public class dd {
 
 	public static void main(String[] args) {
-		System.out.println(solution("582", "734"));
+		String picture = ".xx...xx.";
+		System.out.println(solution(picture));
 	}
-	 public static String solution(String a, String b) {
-	        String answer = "";
-	     BigInteger a_bigInt = new BigInteger(a);
-	    BigInteger b_bigInt = new BigInteger(b);
-	    BigInteger result = a_bigInt.add(b_bigInt);
-	          answer = String.valueOf(result.toString());
-	    return answer;
-	    }
+
+	public static String solution(String picture) {
+		String answer = "";
+		for (int i = 0; i < picture.length() - 1; i++) {
+			for (int j = 0; j < 2; j++) {
+				answer += picture.charAt(i);
+			}
+
+		}
+		return answer;
+	}
 
 }
