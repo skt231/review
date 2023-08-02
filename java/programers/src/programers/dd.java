@@ -1,21 +1,30 @@
 package programers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class dd {
 
 	public static void main(String[] args) {
-		String picture = ".xx...xx.";
-		System.out.println(solution(picture));
-	}
 
-	public static String solution(String picture) {
-		String answer = "";
-		for (int i = 0; i < picture.length() - 1; i++) {
-			for (int j = 0; j < 2; j++) {
-				answer += picture.charAt(i);
-			}
+		Map<Integer, Character> alphaMap = new HashMap<>();
+		String age = "23";
+		String result = "";
 
+
+		for (int i = 0; i <= 25; i++) {
+			char ch = (char) (i + 97);
+			alphaMap.put(i, ch);
 		}
-		return answer;
+
+	
+		for (int i = 0; i < age.length(); i++) {
+			int digit = Integer.parseInt(String.valueOf(age.charAt(i)));
+			char ch = alphaMap.get(digit);
+			result += ch;
+		}
+
+		System.out.println(result); 
 	}
 
 }
