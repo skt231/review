@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const person={
+            firstName: 'Mick',
+            lastName:'Jagger',
+            body:[145,55,255]
+        }
+        console.log(person);
+       console.log(person.firstName);
+       console.log(person.body[0]);
+        // console.log(person["body[0]"])
+        const years={1999:'Good',2020:'Bad'}
+// 모든 키값은 String으로 변환된다.
+        console.log(years["1999"])
+        //이렇게 써도 나오긴함
+        console.log(years[1999])
+        const dumbdumb={true:"dat",null:"asdfgh"}
+        console.log(dumbdumb[null])
+        // 이것도 가능
+        console.log(person['first'+'Name'])
+        //이것도 가능
+        let birthyear=2020
+        console.log(years[birthyear])
+        const restaurant = {
+    name: 'Ichiran Ramen',
+    address: `${Math.floor(Math.random() * 100) + 1} Johnson Ave`,
+    city: 'Brooklyn',
+    state: 'NY',
+    zipcode: '11206',
+}
+
+//YOUR CODE GOES DOWN HERE:
+// 수정하기
+const midterms={danielle:96,thomas:78}
+console.log(midterms)
+midterms.thomas=90;
+console.log(midterms.thomas)
+midterms.thomas='C+';
+midterms['danielle']='A';
+console.log(midterms)
+midterms.ezra="B+";
+console.log(midterms)
+// 배열과 객체 구성하기
+const comments=[
+    {username:'Tammy',text:'lolololol',votes:9},
+    {username:'FishBoi',text:'glub glub',votes:13}
+]
+console.log(comments)
+console.log(comments[0])
+console.log(comments[0].username)
+console.log(comments[0].votes)
+    </script>
+</body>
+</html>
