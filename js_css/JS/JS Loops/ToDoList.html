@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Todo List</h1>
+    <li>"new"- Add A Todo</li>
+    <li>"list"- List All TOdos</li>
+    <li>"delete"- Remove Specific Todo</li>
+    <li>"quit"- Quit App</li>
+    <script>
+        let run = prompt("what would you like to do?");
+
+        const list = [];
+        while (run !== 'quit') {
+            if (run === "new") {
+                const new_one = prompt("Enter new todo");
+                list.push(new_one)
+                console.log(`${new_one} added to list`)
+                console.log("******************")
+
+            } else if (run === "list") {
+                console.log("******************")
+                for(let i=0;i<list.length;i++){
+                    console.log(`${i}: ${list[i]}`);
+                }
+                console.log("******************")
+
+            } else if (run === "delete") {
+                const indexStr = prompt("Enter todo that you want to delete");
+                const index=parseInt(indexStr);
+                if(!Number.isNaN(index)){
+                const deleted=list.splice(index,1);
+                console.log(`Ok, deleted ${deleted}`)
+                console.log("******************")
+                }else{
+                    console.log('Unknown index')
+                }
+            } else if (run === "quit") {
+                console.log("OK QUIT THE APP")
+                console.log("******************")
+
+            }
+            run = prompt("what would you like to do?");
+        }
+    </script>
+</body>
+
+</html>
