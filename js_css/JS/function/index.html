@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function greet() {
+            console.log("Hi!");
+        }
+        // greet();
+        function greet(firstName) {
+            console.log(`firstName is: ${firstName}`)
+            console.log("Hi!")
+        }
+        // greet("skt")
+        // function greet(firstName,lastName){
+        //     console.log(`Hey there, ${firstName} ${lastName[0]}.`)
+        // }
+        // greet('Presley','Elvis');
+        function repeat(str, numTimes) {
+            let result = '';
+            for (let i = 0; i < numTimes; i++) {
+                result += str;
+                console.log(`${result}`);
+            }
+        }
+        //    function add(x,y){
+        //     // console.log(x+y);
+        //     let sum=x+y;
+        //     return sum;
+        //    }
+        function add(x, y) {
+            if (typeof x !== 'number' || typeof y !== 'number') {
+                return false;
+            }
+            let sum = x + y;
+            return sum;
+        }
+        // console.log(add(add(1,5),9)); //이것도 가능
+        const arr = [];
+        function lastElement(arr) {
+            if (arr.length === null) {
+                return arr[arr.length - 1];
+            }else{
+                return null;
+            }
+        }
+        function returnDay(day){
+    if(day===0){
+            return null;
+    }
+    switch(day%7){
+        case 1:
+            return "Monday";
+            break;
+        case 2:
+            return "Tuesday";
+            break;
+        case 3:
+            return "Wednesday";
+            break;
+        case 4:
+            return "Thursday";
+            break;
+        case 5:
+            return "Friday";
+            break;
+        case 6:    
+            return "Saturday";
+            break;
+        case 0:
+            return "Sunday";
+            break;
+    }
+}
+
+    </script>
+</body>
+
+</html>
