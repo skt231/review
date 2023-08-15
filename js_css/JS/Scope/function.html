@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //고차함수
+        let greet = function () { console.log("HI!") }
+        function callTwice(func) {
+            func();
+            func();
+        }
+        function callTenTimes(f) {
+            for (let i = 0; i < 10; i++) {
+                f();
+            }
+        }
+        function rollDie() {
+            const roll = Math.floor(Math.random() * 6) + 1;
+            console.log(roll);
+        }
+        // callTwice(rollDie);
+        callTenTimes(rollDie);
+
+        // 반환함수
+        function makeMysteryFucn() {
+            const rand = Math.random();
+            if (rand > 0.5) {
+                return function () {
+                    console.log("Congrates,I Am A Good Function");
+                    console.log("You win a million dollars!!");
+                }
+            } else {
+                return function () {
+                    alert("you have been infected by a computer virus");
+                    alert("stop trying to colse this windw!")
+                    alert("stop trying to colse this windw!")
+                    alert("stop trying to colse this windw!")
+                    alert("stop trying to colse this windw!")
+                    alert("stop trying to colse this windw!")
+                }
+            }
+        }
+        // const mystery=makeMysteryFunc();
+        // mystery
+
+        function makeBetweenFunc(min, max) {
+            return function (num) {
+                return num >= min && num <= max;
+            }
+        }
+        const isChild = makeBetweenFunc(0, 18);
+        console.log(`${isChild}11`);
+        const isAdult = makeBetweenFunc(19, 64);
+        const isSenior = makeBetweenFunc(65, 120);
+        makeBetweenFunc(50, 100);
+        // 이런 겨웅도 있음
+        // function isBetween(num){
+        //     return num>=50 && num <= 100 
+        // }
+        // function isBetween2(num){
+        //     return num >=1 && num<=10;
+        // }
+        // Methods
+        const myMath = {
+            PI: 3.141592,
+            square: function (num) {
+                return num ** 2;
+            },
+            cube: function (num) {
+                return Math.pow(num, 3);
+            }
+        }
+        //이런식으로도 표현가능
+        // const myMath = {
+        //     PI: 3.141592,
+        //     square(num) {
+        //         return num ** 2;
+        //     },
+        //     cube(num) {
+        //         return Math.pow(num, 3);
+        //     }
+        // }
+        console.log(myMath["cube"](3))//이런식으로 출력 가능
+        //this
+        const cat = {
+            name: 'Blue Steele',
+            color: 'grey',
+            breed: 'scotish fold',
+            meow: function () {
+                console.log(`${this.name} is Meow Meow Meow`)
+            },
+            information: function () {
+                console.log(`name : ${this.name},color : ${this.color},breed : ${this.breed}}`)
+            }
+        }
+        //try/catch
+
+        const yell = function (msg) {
+            try {
+                console.log(msg.toUpperCase().repeat(3))
+            } catch (e) {
+                console.log("please type the String")
+            }
+        }
+    </script>
+
+</body>
+
+</html>

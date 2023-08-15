@@ -81,8 +81,42 @@
         // console.log("OK YOU WIN!");
         const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         for (number of numbers) {
-            console.log(Math.pow(number,2))
-        }
+            console.log(Math.pow(number, 2))
+        }//요즘은 forEach대신 for-of를 많이 씀 하지만 더 복잡한 코드를 원하면 for_each로 ...써도?!?!..
+        //for_Each
+        // function print(element){
+        //     console.log(element);
+        // } 
+        // numbers.forEach(print);       
+        numbers.forEach(function (el) {
+            if (el % 2 === 0) {
+                console.log(el);
+            }
+        })
+        //이거랑 똑같음
+        const movies = [
+            {
+                title: 'Amadeus',
+                score: 99
+            },
+            {
+                title: 'Stand By Me',
+                score: 85
+            },
+            {
+                title: 'Parasite',
+                score: 95
+            },
+            {
+                title: 'Alien',
+                score: 90
+            }
+        ]
+
+        movies.forEach(function (movie) {
+            console.log(`${movie.title} - ${movie.score}/100`)
+        })
+
     </script>
 </body>
 

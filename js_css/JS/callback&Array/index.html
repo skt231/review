@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //Map
+        const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+
+        const doubles = numbers.map(function (num) {
+            return num * 2;
+        })
+
+
+        const movies = [
+            {
+                title: 'Amadeus',
+                score: 99
+            },
+            {
+                title: 'Stand By Me',
+                score: 85
+            },
+            {
+                title: 'Parasite',
+                score: 95
+            },
+            {
+                title: 'Alien',
+                score: 90
+            }
+        ]
+        console.log("abc".concat("1", "3"))
+        const titles = movies.map(function (movie) {
+            return movie.title.toUpperCase();
+        })
+        const fullNames = [{ first: 'Albus', last: 'Dumbledore' }, { first: 'Harry', last: 'Potter' },
+        { first: 'Hermione', last: 'Granger' }, { first: 'Ron', last: 'Weasley' }, { first: 'Rubeus', last: 'Hagrid' },
+        { first: 'Minerva', last: 'McGonagall' }, { first: 'Severus', last: 'Snape' }];
+
+        // Write your code here
+        const answer = fullNames.map(function (character) {
+            return character.first;
+        })
+        for (n of answer) {
+            console.log(n);
+        }
+
+
+
+
+
+        
+
+        // ArrayFunction
+        // const add = function(x,y) {
+        //     return x + y;
+        // }
+
+        // const add = (x, y) => {
+        //     return x + y;
+        // }
+
+       
+// ()가로안에 properties가 1개 이상이면 ()생략가능한데 0개라면 넣어야함
+        const square = num => {
+            return num * num;
+        }
+
+        // const rollDie = () => {
+        //     return Math.floor(Math.random() * 6) + 1
+        // }
+// 이런식으로 쓰면 return을 반환안해도됨
+        const rollDie = () => (
+            Math.floor(Math.random() * 6) + 1
+        )
+        const add = (a, b) => a + b;//이런식으로 () 없어도됨
+
+        
+
+        // const newMovies = movies.map(function (movie) {
+        //     return `${movie.title} - ${movie.score / 10}`
+        // })
+
+
+        // IMPLICIT RETURN
+        const newMovies = movies.map(movie => (
+            `${movie.title} - ${movie.score / 10}`
+        ))
+
+
+    </script>
+</body>
+
+</html>
