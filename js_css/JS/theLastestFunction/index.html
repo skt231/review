@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+    //디펄트값
+        //numSides가 공백이라면 numSides는 6으로 지정
+        // function rollDie(numSides) {
+        //     if (numSides === undefined) {
+        //         numSides = 6
+        //     }
+        //     return Math.floor(Math.random() * numSides) + 1
+        // }
+        // ============
+        // THE NEW WAY!
+        // ============
+        function rollDie(numSides = 6) {
+            return Math.floor(Math.random() * numSides) + 1
+        }
+        function greet(person, msg = "Hey there", punc = '!') {
+            console.log(`${msg}, ${person}${punc}`)
+        }
+// SPREAD IN FUNCTIONS
+const nums = [13, 4, 5, 21, 3, 3, 1, 2, 7, 6, 4, 2, 53456];
+// SPREAD IN FUNCTIONS
+Math.max(nums) //NaN
+Math.max(...nums) //53456
+Math.max(nums) //NaN
+Math.max(...nums) //53456
+
+
+// SPREAD IN ARRAYS((ex)...cats,...dogs)
+const cats = ['Blue', 'Scout', 'Rocket'];
+const dogs = ['Rusty', 'Wyatt'];
+
+const allPets = [...cats, ...dogs];
+const a={..."hello"}
+
+// SPREAD IN OBJECTS
+const feline = { legs: 4, family: 'Felidae' };
+felinea={...feline,color:'black'}//{legs: 4, family: 'Felidae', color: 'black'}
+const canine = { isFurry: true, family: 'Caninae' };
+
+const catDog = { ...feline, ...canine };
+
+
+
+const dataFromForm = {
+    email: 'blueman@gmail.com',
+    password: 'tobias123!',
+    username: 'tfunke'
+}
+const newUser = { ...dataFromForm, id: 2345, isAdmin: false }
+
+//arguments Object
+function sumAll(){
+    let total=0;
+    for(let i=0;i<arguments.length;i++){
+        total += arguments[i];
+    }
+    return total;
+}
+sumAll(1,2,3,4,5) //15
+
+// function sum() { 작동안함
+//     return arguments.reduce((total, el) => total + el)
+// }
+//작동
+// COLLECT THE "REST" IN NUMS:
+function sum(...nums) {
+    return nums.reduce((total, el) => total + el)
+}
+
+
+function raceResults(gold, silver, ...everyoneElse) {
+    console.log(`GOLD MEDAL GOES TO: ${gold}`)
+    console.log(`SILVER MEDAL GOES TO: ${silver}`)
+    console.log(`AND THANKS TO EVERYONE ELSE: ${everyoneElse}`)
+}
+
+
+// ===================
+// ARRAY DESTRUCTURING
+// ===================
+const scores = [929321, 899341, 888336, 772739, 543671, 243567, 111934];
+
+// const highScore = scores[0];
+// const secondHighScore = scores[1];
+
+const [gold, silver, bronze, ...everyoneElse] = scores;
+
+// ===================
+// OBJECT DESTRUCTURING
+// ===================
+const user = {
+    email: 'harvey@gmail.com',
+    password: 'sCoTt1948sMiTh',
+    firstName: 'Harvey',
+    lastName: 'Milk',
+    born: 1930,
+    died: 1978,
+    bio: 'Harvey Bernard Milk was an American politician and the first openly gay elected official in the history of California, where he was elected to the San Francisco Board of Supervisors',
+    city: 'San Francisco',
+    state: 'California'
+}
+
+const user2 = {
+    email: 'Stacy@gmail.com',
+    firstName: 'Stacy',
+    lastName: 'Gonzalez',
+    born: 1987,
+    city: 'Tulsa',
+    state: 'Oklahoma'
+}
+
+// const firstName = user.firstName;
+// const lastName = user.lastName;
+// const email = user.email;
+const { email, firstName, lastName, city, bio } = user;
+//born으로는 안나오고 birthyear은 나옴 ,died는 안나오고 deathYear은 나옴
+// const { born: birthYear, died: deathYear = 'N/A' } = user;
+
+// const { city, state, died = 'N/A' } = user2;
+
+// ===================
+// PARAM DESTRUCTURING
+// ===================
+
+// function fullName(user) {
+//     return `${user.firstName} ${user.lastName}`
+// }
+// function fullName(user) {
+//     const { firstName, lastName } = user;
+//     return `${firstName} ${lastName}`
+// }
+
+
+function fullName({ firstName, lastName }) {
+    return `${firstName} ${lastName}`
+}
+
+
+const movies = [
+    {
+        title: 'Amadeus',
+        score: 99,
+        year: 1984
+    },
+    {
+        title: 'Sharknado',
+        score: 35,
+        year: 2013
+    },
+    {
+        title: '13 Going On 30',
+        score: 70,
+        year: 2004
+    },
+    {
+        title: 'Stand By Me',
+        score: 85,
+        year: 1986
+    },
+    {
+        title: 'Waterworld',
+        score: 62,
+        year: 1995
+    },
+    {
+        title: 'Jingle All The Way',
+        score: 71,
+        year: 1996
+    },
+    {
+        title: 'Parasite',
+        score: 95,
+        year: 2019
+    },
+    {
+        title: 'Notting Hill',
+        score: 77,
+        year: 1999
+    },
+    {
+        title: 'Alien',
+        score: 90,
+        year: 1979
+    }
+]
+
+
+// movies.filter((movie) => movie.score >= 90)
+// movies.filter(({ score }) => score >= 90)
+
+
+// movies.map(movie => {
+//     return `${movie.title} (${movie.year}) is rated ${movie.score}`
+// })
+
+movies.map(({ title, score, year }) => {
+    return `${title} (${year}) is rated ${score}`
+})
+    </script>
+</body>
+
+</html>

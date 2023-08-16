@@ -90,7 +90,7 @@
 
         movies.filter(m => m.score > 80).map(m => m.title);
         //some__every
-            //참이나 거짓을 반환
+        //참이나 거짓을 반환
         const exams = [80, 98, 92, 78, 77, 90, 89, 84, 81, 77]
 
         exams.every(score => score >= 75)
@@ -98,7 +98,64 @@
 
         movies.some(movie => movie.year > 2015)
 
-        const allEvans= numbers=>numbers.every(num=>num%2==0);
+        const allEvans = numbers => numbers.every(num => num % 2 == 0);
+
+        //REDUCE
+        const prices = [9.99, 1.50, 19.99, 49.99, 30.50];
+
+        let total = 0;
+        // for (let price of prices) {
+        //     total += price
+        // }
+        // console.log(total)
+
+        // const total = prices.reduce((total, price) => {
+        //     return total + price
+        // })
+        total = prices.reduce((total, price) => {
+            return total + price
+        })
+        const minPrice = prices.reduce((min, price) => {
+            if (price < min) {
+                return price;
+            }
+            return min;
+        })
+        const highestRated = movies.reduce((bestMovie, currMovie) => {
+            if (currMovie.score > bestMovie.score) {
+                return currMovie;
+            }
+            return bestMovie;
+        })
+
+
+        // We can provide an initial value as the 2nd arg to reduce:
+        const evens = [2, 4, 6, 8];
+        evens.reduce((sum, num) => sum + num) //20
+        evens.reduce((sum, num) => sum + num, 100) //120
+        //etc...
+        const person = {
+            firstName: 'Viggo',
+            lastName: 'Mortensen',
+            fullName: function () {
+                return `${this.firstName} ${this.lastName}`
+            },
+            shoutName: function () {
+                // // setTimeout 메소드는 window안에 있으므로 this 는 window임
+                // setTimeout (function(){
+                //     console.log(this);
+                //     console.log(this.fullName);
+                // })
+                setTimeout(() => {
+                    //keyword 'this' in arrow functions refers to the value of 'this' when the function is created
+                    console.log(this);
+                    console.log(this.fullName())
+                }, 3000)
+            }
+        }
+            // 여기서 this.는 window를 가리키므로 undifined가 나옴
+            // fullName: () => (`${person.firstName} ${this.lastName}`)
+
 
     </script>
 </body>
