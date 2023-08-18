@@ -41,3 +41,31 @@ for (let link of allLinks) {
     link.style.textDecorationColor = 'magenta';
     link.style.textDecorationStyle = 'wavy'
 }
+// attribute...//getAttribute()
+const firstLink=document.querySelector('a');
+firstLink.getAttribute('href')
+// setAttirbute()
+firstLink.setAttribute('href','http://www.google.com');
+
+
+//change style
+// h1.style.color='green'
+//h1.style.border='2px solid pink'
+const AllLink=document.querySelector('a');
+// for(let link of allLinks){
+//     link.style.color='rgb(0,108,134)';
+        // link.style.textDecorationColor='magenta';
+        // link.style.textDecoration='wavy';
+// }
+// window.getComputedStyle(h1).fontSize    ....style을 가저욤
+AllLink.style.borderRadius
+
+// classList
+const h2=document.querySelector('h2')
+h2.classList.add('purple')
+h2.classList.add('border')
+// h2.classList.remove('border')
+// h2.classList.contains('border')//true /
+// h2.classList.toggle('pa')//false//클래스가 이미 존재하면 제거하고, 존재하지 않으면 추가
+
+
