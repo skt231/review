@@ -116,6 +116,12 @@ const h3=document.createElement('h3')
 h3.innerText='I am h3'; 
 h1.after(h3)
 
+//removeChild()
+const firstLi=document.querySelectorAll('li')
+const ul=firstLi.parentElement;
+ul.removeChild('firstLi');
+
+
 
 
 

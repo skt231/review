@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<head>
+    <title>100 Buttons!</title>
+</head>
+
+<body>
+    <!--DO NOT TOUCH THIS FILE PLEASE!-->
+    <h1>Look At All My Buttons!</h1>
+    <div id="container">
+
+    </div>
+    <script>
+        // WRITE YOUR CODE IN HERE:
+        const container = document.querySelector('#container');
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 20; j++) {
+                const button = document.createElement('button');
+                button.innerText = 'Hey!';
+                container.appendChild(button);
+            }
+        }
+    </script>
+</body>
+
+</html>
