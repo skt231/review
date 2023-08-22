@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Basics</title>
+</head>
+
+<body>
+    <h1>Events</h1>
+    <button onclick="alert('you clicked me!'); alert('stop clicking')">Click Me!</button>
+
+    <button id="v2">Click Me (2nd version)</button>
+
+    <button id="v3">Click Me (3rd version)</button>
+
+    <button id="tas">Twist & Shout</button>
+
+    <script>
+        const v2 = document.querySelector('#v2');
+        // v2.onclick=function(){
+        //    alert("fuck");
+        // }
+        v2.onclick = () => (alert("congraturation"))
+
+        function scream() {
+            console.log("any but more question")
+        }
+        v2.onmouseenter = scream;
+
+        document.querySelector('h1').onclick = () => {
+            alert('you clicked the h1!')
+        }
+        //Onclick는 한 함수만 가능한데 addEventListener은 여러이벤트 가능
+        const btn3 = document.querySelector('#v3');
+        // btn3.addEventListener('click',function(){alert("You caught mouse")})
+        btn3.addEventListener('click', () => alert("You caught mouse"))
+
+        const tas = document.querySelector('#tas');
+        function twist() {
+            console.log("twisting")
+        }
+        const shout = () => (console.log('Shouting'))
+        tas.addEventListener('click', twist(), 'click', shout())
+        tas.addEventListener('mouseover',()=>console.log('dont Touch'))
+//https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener  //이외는 여기 참고
+        // tas.addEventListener('click', twist,{once:true})//이러면 한번만 실행되고 이후는 실행안됨
+        // tas.addEventListener('click', shout)//이후는 shout만 실행됨
+    </script>
+</body>
+
+</html>
