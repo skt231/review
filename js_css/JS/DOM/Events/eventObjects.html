@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Object</title>
+
+</head>
+
+<body>
+    <button>CLICK</button>
+    <input type="text">
+    <script>
+        document.querySelector('button').addEventListener('click', function (evt) {
+            console.log(evt)})
+        const input = document.querySelector('input');
+        // input.addEventListener('keydown', function () {
+        //     console.log("keyDown!")
+        // })
+        // input.addEventListener('keyup', function () {
+        //     console.log("keyup!")
+        // })
+        // const input = document.querySelector('input');
+        input.addEventListener('keydown', function (e) {
+            console.log(e.key)//ArrowDown
+            console.log(e.code)//ArrowDown
+        })
+        //input=s// s :key //KeyS //code
+        //input=s// d :key //KeyD //code
+        
+        //input에 넣지 않아도 나타남
+        window.addEventListener('keydown', function (e) {
+            switch (e.code) {
+                case 'ArrowUp':
+                    console.log("UP!");
+                    break;
+                case 'ArrowDown':
+                    console.log("DOWN!");
+                    break;
+                case 'ArrowLeft':
+                    console.log("LEFT!");
+                    break;
+                case 'ArrowRight':
+                    console.log("RIGHT!");
+                    break
+                default:
+                    console.log("IGNORED!")
+            }
+        })
+        
+    </script>
+</body>
+
+</html>

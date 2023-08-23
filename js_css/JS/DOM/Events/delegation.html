@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Delegation</title>
+</head>
+
+<body>
+    <h1>Event Delegation</h1>
+
+    <form action="/dogs" id="tweetForm">
+        <input type="text" name="username" placeholder="username">
+        <input type="text" name="tweet" placeholder="tweet">
+        <button>Post Tweet</button>
+    </form>
+
+    <h2>Tweets:</h2>
+    <ul id="tweets">
+        <li>I AM LI!!!</li>
+        <li>I AM LI!!!</li>
+        <p>aslkdjaslkdjaksl</p>
+    </ul>
+
+    <script>
+
+        const tweetForm = document.querySelector('#tweetForm');
+        const tweetsContainer = document.querySelector('#tweets');
+        tweetForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const usernameInput = tweetForm.elements.username;
+            const tweetInput = tweetForm.elements.tweet;
+            addTweet(usernameInput.value, tweetInput.value)
+            usernameInput.value = '';
+            tweetInput.value = '';
+        });
+
+        const addTweet = (username, tweet) => {
+            const newTweet = document.createElement('li');
+            const bTag = document.createElement('b');
+            bTag.append(username)
+            newTweet.append(bTag);
+            newTweet.append(`- ${tweet}`)
+            tweetsContainer.append(newTweet);
+        }
+
+        tweetsContainer.addEventListener('click', function (e) {
+            e.target.nodeName === 'LI' && e.target.remove();
+        })
+
+
+    </script>
+</body>
+
+</html>
