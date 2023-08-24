@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+
+<body>
+    <h1>Test</h1>
+    <form action="/Test" id="testForm">
+        이름 : <input type="text" id="name"><br>
+        나이 : <input type="text" id="age"><br>
+        과목 :<br>
+        <input type="checkbox" name="subject" id="op1" value="회로이론">
+        <label for="op1">회로이론</label><br>
+        <input type="checkbox" name="subject" id="op2" value="전기자기학">
+        <label for="op2">전기자기학</label><br>
+        <input type="checkbox" name="subject" id="op3" value="회로실험">
+        <label for="op3">회로실험</label><br>
+        <input type="checkbox" name="subject" id="op4" value="반도체이론">
+        <label for="op4">반도체이론</label><br>
+        <input type="checkbox" name="subject" id="op5" value="신재생에너지이론">
+        <label for="op5">신재생에너지이론</label><br>
+        <button>submit</button>
+    </form>
+    <div>
+        <ul id="bd">
+
+        </ul>
+    </div>
+    <script>
+        const form = document.querySelector("#testForm");
+        const name = document.querySelector('#name');
+        const age = document.querySelector('#age');
+        const list = document.querySelector("#bd")
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const bd_name = name.value;
+            const bd_age = age.value;
+            const bd_subjects = document.querySelectorAll("input[type='checkbox']:checked");
+            const subjectValues = Array.from(bd_subjects).map(subject => subject.value);
+            const newLi = document.createElement("li");
+            newLi.innerText = `이름: ${bd_name}, 나이: ${bd_age}, 과목: ${subjectValues.join(', ')}`;
+            list.append(newLi);
+            name.value = "";
+            age.value = "";
+        })
+
+        list.addEventListener('click', function (e) {
+            if (e.target.nodeName === 'LI') {
+                e.target.remove();
+            }
+        })
+    </script>
+</body>
+
+</html>

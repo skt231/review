@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>score</h1>
+    <div>
+        <p id="monitor">touch button</p>
+        <button id="play">play</button><br>
+        <button id="btn1">1</button><button id="btn2">2</button>
+        <button id="reset">reset</button>
+    </div>
+    <script>
+        const div = document.querySelector('div');
+        const monitor = document.querySelector('#monitor');
+        const btn1 = document.querySelector('#btn1');
+        const btn2 = document.querySelector('#btn2');
+        const play = document.querySelector("#play");
+        const reset = document.querySelector("#reset");
+        let p1 = 0;
+        let p2 = 0;
+        play.addEventListener('click', function () {
+            display();
+        })
+        btn1.addEventListener('click', function () {
+            p1++;
+            console.log(p1)
+            display();
+        })
+        btn2.addEventListener('click', function () {
+            p2++;
+            console.log(p2)
+            display();
+        })
+        reset.addEventListener('click', function () {
+            p1 = 0;
+            p2 = 0;
+            display();
+        })
+        const display = () => {
+            monitor.innerText = `${p1} : ${p2}`;
+        }
+    </script>
+</body>
+
+</html>
