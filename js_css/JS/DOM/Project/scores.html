@@ -9,42 +9,61 @@
 </head>
 
 <body>
-    <h1>score</h1>
+    <h1>Score Board</h1>
     <div>
-        <p id="monitor">touch button</p>
+        <h3>touch button</h3>
+        <p id="monitor"><span id="p1"></span><span id="vs">:</span><span id="p2"></span></p>
         <button id="play">play</button><br>
         <button id="btn1">1</button><button id="btn2">2</button>
         <button id="reset">reset</button>
     </div>
     <script>
         const div = document.querySelector('div');
+        const h3 = document.querySelector('h3');
         const monitor = document.querySelector('#monitor');
+        const p1 = document.querySelector('#p1');
+        const p2 = document.querySelector('#p2');
+        const v3 = document.querySelector('#vs');
         const btn1 = document.querySelector('#btn1');
         const btn2 = document.querySelector('#btn2');
         const play = document.querySelector("#play");
         const reset = document.querySelector("#reset");
-        let p1 = 0;
-        let p2 = 0;
+        let p1_score = 0;
+        let p2_score = 0;
         play.addEventListener('click', function () {
-            display();
+            h3.innerText = 'score';
+            vs.innerText = ':';
+            p1.innerText = p1_score;
+            p2.innerText = p2_score;
         })
         btn1.addEventListener('click', function () {
-            p1++;
-            console.log(p1)
+            p1_score++;
+            p1.innerText = p1_score;
             display();
         })
         btn2.addEventListener('click', function () {
-            p2++;
-            console.log(p2)
+            p2_score++;
+            p2.innerText = p2_score;
             display();
         })
         reset.addEventListener('click', function () {
-            p1 = 0;
-            p2 = 0;
-            display();
+            p1_score = 0;
+            p2_score = 0;
+            p1.innerText = p1_score;
+            p2.innerText = p2_score;
+            
         })
         const display = () => {
-            monitor.innerText = `${p1} : ${p2}`;
+            // monitor.innerText = `${p1} : ${p2}`;
+            if(p1<=2){
+                this.style.color='white';
+            }else if(p2<=2){
+                this.style.color='white';
+            }else if(p1>2||p2>2){
+                this.style.color='yellow';
+            }else if(p1>=5||p2>=5){
+                this.style.color='red'
+            }
         }
     </script>
 </body>
