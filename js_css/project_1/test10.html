@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* 스타일링을 위한 CSS */
+        .stage {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .seat-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            /* 수평으로 고르게 배치 */
+            align-content: space-around;
+            /* 수직으로 고르게 배치 */
+            gap: 5px;
+            /* 가로와 세로 간격 설정 */
+            height: 50vh;
+            /* 화면 높이에 맞춤 */
+        }
+
+        .seat {
+            width: calc(10% - 20px);
+            /* 화면 너비에 따라 동적으로 조절됨 */
+            height: 40px;
+            background-color: #ccc;
+            margin: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .selected {
+            background-color: red;
+        }
+
+        .payment-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stage">
+        <h1>무대</h1>
+    </div>
+    <div class="seat-container" id="seatContainer">
+        <!-- 좌석은 JavaScript로 동적으로 생성됩니다. -->
+    </div>
+    <div class="payment-container">
+        <h2>총 결제액: <span id="totalAmount">0</span>원</h2>
+        <button id="resetButton">초기화</button>
+        <button id="paymentButton">결제</button>
+    </div>
+
+    <script>
+        // JavaScript로 좌석 생성 및 추가
+        const seatContainer = document.getElementById('seatContainer');
+        const totalAmountElement = document.getElementById('totalAmount');
+        const resetButton = document.getElementById('resetButton');
+        const paymentButton = document.getElementById('paymentButton');
+
+        const seats = [];
+        let totalAmount = 0;
+
+        // 좌석 수를 정의합니다. (10x5)
+        const totalRows = 5;
+        const seatsPerRow = 10;
+        const totalSeats = totalRows * seatsPerRow;
+
+        for (let i = 1; i <= totalSeats; i++) {
+            // 좌석 요소 생성
+            const seat = document.createElement('div');
+            seat.className = 'seat';
+            seat.textContent = i;
+
+            // 좌석 클릭 이벤트 리스너 추가
+            seat.addEventListener('click', () => {
+                if (!seats.includes(i)) {
+                    seats.push(i);
+                    seat.classList.add('selected'); // 선택된 좌석은 빨간색으로 표시
+                    totalAmount += 1000; // 좌석당 1000원 추가
+                } else {
+                    const index = seats.indexOf(i);
+                    if (index > -1) {
+                        seats.splice(index, 1);
+                        seat.classList.remove('selected'); // 선택 해제된 좌석은 원래 색상으로 돌려줌
+                        totalAmount -= 1000; // 좌석당 1000원 감소
+                    }
+                }
+
+                // 총 결제액 업데이트
+                totalAmountElement.textContent = totalAmount;
+            });
+
+            // 좌석을 좌석 컨테이너에 추가
+            seatContainer.appendChild(seat);
+        }
+
+        // 결제 버튼 클릭 이벤트 리스너 추가
+        paymentButton.addEventListener('click', () => {
+            alert(`결제가 완료되었습니다. 총 결제액: ${totalAmount}원`);
+            resetSeats();
+        });
+
+        // 리셋 버튼 클릭 이벤트 리스너 추가
+        resetButton.addEventListener('click', () => {
+            resetSeats();
+        });
+
+        // 좌석 선택과 결제 정보를 리셋하는 함수
+        function resetSeats() {
+            seats.length = 0; // 선택한 좌석 초기화
+            totalAmount = 0; // 결제액 초기화
+
+            // 모든 좌석의 선택 상태와 배경색 초기화
+            const allSeats = document.querySelectorAll('.seat');
+            allSeats.forEach(seat => {
+                seat.classList.remove('selected');
+            });
+
+            // 총 결제액 업데이트
+            totalAmountElement.textContent = totalAmount;
+        }
+    </script>
+</body>
+
+</html>

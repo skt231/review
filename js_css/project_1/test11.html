@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Picker with Selectable Days</title>
+    <style>
+        /* 스타일링 */
+        .calendar {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #datepicker {
+            padding: 5px;
+        }
+
+        #complete-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #selected-date {
+            margin-top: 10px;
+        }
+
+        /* 달력 스타일 */
+        #calendar-container {
+            width: auto;
+            height: auto;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            z-index: 1000;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            padding: 10px;
+        }
+
+        .dWeek {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #ccc;
+        }
+
+        .ableDay {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #F5A9A9;
+        }
+
+        .selectedDay {
+            background-color: #F5A9A9;
+        }
+
+        .ableDay.disabled {
+            background-color: #FFFFFF;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calendar">
+        <input type="text" id="datepicker" placeholder="요일 선택">
+        <div id="calendar-container" class="hidden">
+            <div class="days"></div>
+        </div>
+        <button id="complete-button">완료</button>
+        <button id="reset-button">리셋</button>
+    </div>
+    <div>
+        <h2>선택한 날짜:</h2>
+        <p id="selected-date"></p>
+    </div>
+
+    <script>
+        // 선택 가능한 요일 설정 (월요일과 수요일만 선택 가능)
+        const selectableDays = [1, 3]; // 일요일(0)부터 토요일(6)까지 순서대로 0, 1, 2, ..., 6으로 표현됩니다.
+
+        // "완료" 버튼 클릭 시 선택한 날짜 화면에 표시
+        const completeButton = document.getElementById('complete-button');
+        const selectedDateElement = document.getElementById('selected-date');
+
+        completeButton.addEventListener('click', () => {
+            const datepicker = document.getElementById('datepicker');
+            const selectedDate = datepicker.value;
+            const selectedDay = new Date(selectedDate).getDay(); // 요일을 숫자로 얻어옴
+
+            if (selectableDays.includes(selectedDay)) {
+                selectedDateElement.textContent = `선택한 날짜: ${selectedDate}`;
+            } else {
+                selectedDateElement.textContent = '선택할 수 없는 요일입니다.';
+            }
+        });
+
+        // 리셋 버튼 클릭 시 선택한 날짜 초기화
+        const resetButton = document.getElementById('reset-button');
+        resetButton.addEventListener('click', () => {
+            document.getElementById('datepicker').value = '';
+            selectedDateElement.textContent = '';
+        });
+
+        // 캘린더 생성 함수
+        function createCalendar(year, month) {
+            const calendarContainer = document.getElementById('calendar-container');
+            const daysContainer = document.querySelector('.days');
+            daysContainer.innerHTML = '';
+
+            // 해당 월의 첫 번째 날의 요일을 구함 (0: 일요일, 1: 월요일, ...)
+            const firstDayOfWeek = new Date(year, month, 1).getDay();
+
+            // 해당 월의 마지막 날짜를 구함
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // 요일 정보
+            const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+
+            // 요일을 표시
+            for (let i = 0; i < 7; i++) {
+                const dayOfWeekElement = document.createElement('div');
+                dayOfWeekElement.className = 'dWeek';
+                dayOfWeekElement.textContent = daysOfWeek[i];
+                daysContainer.appendChild(dayOfWeekElement);
+            }
+
+            // 각 날짜를 생성하고 요일에 따라 클래스를 추가
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dayOfWeek = date.getDay();
+
+                const dayElement = document.createElement('div');
+                dayElement.className = 'ableDay';
+                dayElement.textContent = day;
+
+                // 선택 가능한 요일인 경우 클래스 추가
+                if (selectableDays.includes(dayOfWeek)) {
+                    dayElement.addEventListener('click', () => {
+                        const selectedDay = date.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                        document.getElementById('datepicker').value = selectedDay;
+                        calendarContainer.classList.add('hidden');
+                    });
+                } else {
+                    dayElement.classList.add('disabled');
+                }
+
+                daysContainer.appendChild(dayElement);
+            }
+        }
+
+        // 달력 열기 버튼 클릭 시 달력 표시
+        const datepickerInput = document.getElementById('datepicker');
+        datepickerInput.addEventListener('focus', () => {
+            const currentDate = new Date();
+            const selectedYear = currentDate.getFullYear();
+            const selectedMonth = currentDate.getMonth();
+
+            createCalendar(selectedYear, selectedMonth);
+
+            const calendarContainer = document.getElementById('calendar-container');
+            calendarContainer.classList.remove('hidden');
+        });
+    </script>
+</body>
+
+</html>

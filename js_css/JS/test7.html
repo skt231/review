@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // JSON 데이터 가져오기 (예: fetch API 사용)
+const xmlUrl = 'http://www.kopis.or.kr/openApi/restful/pblprfr/PF128899?service=b0a82e699a254319bbe6decc02de2489';
+
+fetch(xmlUrl)
+  .then(response => response.text())
+  .then(xmlString => {
+    // XML 파싱
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+
+    // XML에서 JSON으로 변환
+    const jsonObject = xmlToJson(xmlDoc);
+    const posterURL =jsonObject.dbs.db.poster["#text"]["#text"];
+    //['#text']
+    // 전체 JSON 데이터를 콘솔에 출력
+    console.log(posterURL);
+  })
+  .catch(error => {
+    console.error('Error fetching XML:', error);
+  });
+
+// XML을 JSON으로 변환하는 함수
+function xmlToJson(xml) {
+  const result = {};
+
+  if (xml.nodeType === 1) {
+    if (xml.attributes.length > 0) {
+      result['@attributes'] = {};
+      for (let i = 0; i < xml.attributes.length; i++) {
+        const attribute = xml.attributes[i];
+        result['@attributes'][attribute.nodeName] = attribute.nodeValue;
+      }
+    }
+  } else if (xml.nodeType === 3) {
+    result['#text'] = xml.nodeValue;
+  }
+
+  if (xml.hasChildNodes()) {
+    for (let i = 0; i < xml.childNodes.length; i++) {
+      const item = xml.childNodes[i];
+      const nodeName = item.nodeName;
+
+      if (typeof result[nodeName] === 'undefined') {
+        result[nodeName] = xmlToJson(item);
+      } else {
+        if (typeof result[nodeName].push === 'undefined') {
+          const old = result[nodeName];
+          result[nodeName] = [];
+          result[nodeName].push(old);
+        }
+        result[nodeName].push(xmlToJson(item));
+      }
+    }
+  }
+
+  return result;
+}
+
+
+    </script>
+</body>
+
+</html>

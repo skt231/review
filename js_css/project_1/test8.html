@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML to HTML</title>
+</head>
+
+<body>
+    <div id="posterContainer"></div>
+
+    <script>
+        // JSON 데이터 가져오기 (예: fetch API 사용)
+        const xmlUrl = 'http://www.kopis.or.kr/openApi/restful/pblprfr?service=b0a82e699a254319bbe6decc02de2489&stdate=20230901&eddate=20230910&cpage=1&rows=5&prfstate=02&signgucode=11&signgucodesub=1111&kidstate=Y';
+
+        async function fetchXML(url) {
+            try {
+                const response = await fetch(url);
+                const xmlString = await response.text();
+                return new DOMParser().parseFromString(xmlString, 'text/xml');
+            } catch (error) {
+                console.error('Error fetching XML:', error);
+                return null;
+            }
+        }
+
+        async function fetchAndDisplayPosters() {
+            const xmlDoc = await fetchXML(xmlUrl);
+
+            if (!xmlDoc) {
+                return;
+            }
+
+            const posterContainer = document.getElementById('posterContainer');
+            const dbElements = xmlDoc.querySelectorAll('db');
+
+            dbElements.forEach(dbElement => {
+                const posterUrl = dbElement.querySelector('poster').textContent;
+                const img = document.createElement('img');
+                const a = document.createElement('a');
+                const id = dbElement.querySelector('mt20id').textContent;
+                console.log(id);
+                a.href = `test9.html?data=${id}`;
+
+                
+                img.src = posterUrl;
+                a.appendChild(img);
+                posterContainer.appendChild(a);
+            });
+        }
+
+        fetchAndDisplayPosters();
+    </script>
+</body>
+
+</html>

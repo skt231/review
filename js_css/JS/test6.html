@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Styurl Extraction</title>
+</head>
+
+<body>
+    <script>
+        // API 주소
+        const apiUrl = 'http://www.kopis.or.kr/openApi/restful/pblprfr/PF128899?service=b0a82e699a254319bbe6decc02de2489';
+
+        // XML 데이터를 가져오고 처리하는 함수
+        function fetchAndDisplayImages() {
+            // API 요청 보내기
+            fetch(apiUrl)
+                .then(response => response.text())
+                .then(data => {
+                    // XML 파싱
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(data, 'text/xml');
+
+                    // <styurl> 엘리먼트 추출
+                    const styurlElements = xmlDoc.querySelectorAll('poster');
+
+                    // <styurl> 엘리먼트의 내용을 배열로 저장
+                    const styurls = Array.from(styurlElements).map(styurlElement => styurlElement.textContent);
+
+                    // 이미지 표시
+                    for (const styurl of styurls) {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = styurl;
+                        document.body.appendChild(imgElement);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        // 페이지 로드 후 이미지 가져오기 함수 실행
+        window.onload = fetchAndDisplayImages;
+    </script>
+</body>
+
+</html>
