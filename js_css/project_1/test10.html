@@ -59,9 +59,28 @@
         <button id="resetButton">초기화</button>
         <button id="paymentButton">결제</button>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/script.js"></script>
 
     <script>
-        // JavaScript로 좌석 생성 및 추가
+        async function fetchXML(url) {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Network response was not ok");
+            const text = await response.text();
+            const parser = new DOMParser();
+            return parser.parseFromString(text, "text/xml");
+        }
+
+        async function getPcseguidanceValue(mt20id) {
+            const xmlDoc = await fetchXML(`http://www.kopis.or.kr/openApi/restful/pblprfr/${mt20id}?service=b0a82e699a254319bbe6decc02de2489`);
+            const pcseguidanceElement = xmlDoc.querySelector('pcseguidance');
+            if (pcseguidanceElement) {
+                return Number(pcseguidanceElement.textContent.replace(/[^0-9]/g, ''));
+            }
+            return 0;
+        }
+
         const seatContainer = document.getElementById('seatContainer');
         const totalAmountElement = document.getElementById('totalAmount');
         const resetButton = document.getElementById('resetButton');
@@ -70,66 +89,64 @@
         const seats = [];
         let totalAmount = 0;
 
-        // 좌석 수를 정의합니다. (10x5)
         const totalRows = 5;
         const seatsPerRow = 10;
         const totalSeats = totalRows * seatsPerRow;
 
+        let seatPrice = 0;  // 기본 좌석 가격 설정
+
+        window.addEventListener('load', async () => {
+            const mt20id = new URL(window.location.href).searchParams.get("mt20id");
+            if (mt20id) {
+                seatPrice = await getPcseguidanceValue(mt20id);
+                console.log(seatPrice);
+            }
+        });
+
         for (let i = 1; i <= totalSeats; i++) {
-            // 좌석 요소 생성
             const seat = document.createElement('div');
-            seat.className = 'seat';
+            seat.className = `seat`;
+            seat.id=`s-${i}`;
             seat.textContent = i;
 
-            // 좌석 클릭 이벤트 리스너 추가
             seat.addEventListener('click', () => {
                 if (!seats.includes(i)) {
                     seats.push(i);
-                    seat.classList.add('selected'); // 선택된 좌석은 빨간색으로 표시
-                    totalAmount += 1000; // 좌석당 1000원 추가
+                    seat.classList.add('selected');
+                    totalAmount += seatPrice;
                 } else {
                     const index = seats.indexOf(i);
                     if (index > -1) {
                         seats.splice(index, 1);
-                        seat.classList.remove('selected'); // 선택 해제된 좌석은 원래 색상으로 돌려줌
-                        totalAmount -= 1000; // 좌석당 1000원 감소
+                        seat.classList.remove('selected');
+                        totalAmount -= seatPrice;
                     }
                 }
-
-                // 총 결제액 업데이트
                 totalAmountElement.textContent = totalAmount;
             });
-
-            // 좌석을 좌석 컨테이너에 추가
             seatContainer.appendChild(seat);
         }
 
-        // 결제 버튼 클릭 이벤트 리스너 추가
         paymentButton.addEventListener('click', () => {
             alert(`결제가 완료되었습니다. 총 결제액: ${totalAmount}원`);
             resetSeats();
         });
 
-        // 리셋 버튼 클릭 이벤트 리스너 추가
         resetButton.addEventListener('click', () => {
             resetSeats();
         });
 
-        // 좌석 선택과 결제 정보를 리셋하는 함수
         function resetSeats() {
-            seats.length = 0; // 선택한 좌석 초기화
-            totalAmount = 0; // 결제액 초기화
-
-            // 모든 좌석의 선택 상태와 배경색 초기화
+            seats.length = 0;
+            totalAmount = 0;
             const allSeats = document.querySelectorAll('.seat');
             allSeats.forEach(seat => {
                 seat.classList.remove('selected');
             });
-
-            // 총 결제액 업데이트
             totalAmountElement.textContent = totalAmount;
         }
     </script>
+
 </body>
 
 </html>

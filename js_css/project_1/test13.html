@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XML to HTML</title>
+    <script src="js\imageModule.js" defer></script>
+</head>
+
+<body>
+    <div id="posterContainer"
+        data-xmlurl="http://www.kopis.or.kr/openApi/restful/pblprfr?service=b0a82e699a254319bbe6decc02de2489&stdate=20230901&eddate=20230910&cpage=1&rows=5&prfstate=02&signgucode=11&signgucodesub=1111&kidstate=Y">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchAndDisplayPosters().then(data => {
+                const posterContainer = document.getElementById('posterContainer');
+                data.forEach(item => {
+                    const a = document.createElement('a');
+                    a.href = `test9.html?data=${item.mt20id}`;
+                    const img = document.createElement('img');
+                    img.src = item.poster;
+                    a.appendChild(img);
+                    posterContainer.appendChild(a);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

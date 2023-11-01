@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>회원가입</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/fontawesome/css/all.css">
+
+    <!-- Main Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+    <!-- style -->
+
+    <style>
+        .top-right {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .top-right a {
+            color: aliceblue;
+        }
+
+        .mt-15 {
+            margin-top: 15rem;
+            /* 원하는 만큼 수정 가능 */
+        }
+
+        .btn-info:hover {
+            background-color: #17a2b8;
+            /* btn-info의 기본 배경색 유지 */
+            border-color: #17a2b8;
+            /* btn-info의 기본 테두리색 유지 */
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!-- 소통페이지 -->
+    <!-- START preloader-wrapper -->
+    <div class="preloader-wrapper">
+        <div class="preloader-inner">
+            <div class="spinner-border text-red"></div>
+        </div>
+    </div>
+    <!-- END preloader-wrapper -->
+
+    <!-- START main-wrapper -->
+    <section class="d-flex">
+
+        <!-- start of sidenav -->
+        <aside>
+            <div class="sidenav position-sticky d-flex flex-column justify-content-between">
+                <a class="navbar-brand" href="index.html" class="logo">
+                    <img src="images/logo.png" alt="">
+                </a>
+                <!-- end of navbar-brand -->
+
+                <div class="navbar navbar-dark my-4 p-0 font-primary">
+                    <ul class="navbar-nav w-100">
+                        <li class="nav-item active">
+                            <a class="nav-link text-white px-0 pt-0" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white px-0" href="store.html">스토어</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white px-0" href="###">소통공간</a>
+                        </li>
+                        <li class="nav-item  accordion">
+                            <div id="drop-menu" class="drop-menu collapse">
+                                <a class="d-block " href="reservation.html">예매하기</a>
+                                <a class="d-block " href="playList.html">전체 공연</a>
+                                <a class="d-block " href="###">예매현황</a>
+                            </div>
+                            <a class="nav-link text-white" href="#!" role="button" data-toggle="collapse"
+                                data-target="#drop-menu" aria-expanded="false" aria-controls="drop-menu">예매하기</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white px-0" href="###">MyPage</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end of navbar -->
+                <br>
+            </div>
+        </aside>
+        <div class="top-right">
+            <span><a href="login.html">login</a></span> &nbsp; <span><a href="resisterUser.html">resister</a></span>
+        </div>
+        <!-- end of sidenav -->
+        <div class="container mt-15">
+            <h2>회원가입</h2>&nbsp;
+            <form action="/register" method="post">
+                <div class="form-group row">
+                    <label for="username" class="col-sm-2 col-form-label">ID (사용자 이름):</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pwd" class="col-sm-2 col-form-label">비밀번호:</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="pwd" name="password" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="pwd-confirm" class="col-sm-2 col-form-label">비밀번호 확인:</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="pwd-confirm" name="password_confirm" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">이메일:</label>
+                    <div class="col-sm-4">
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                </div>&nbsp;
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-info">회원가입</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- END main-wrapper -->
+
+    <!-- All JS Files -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <script src="js/imageModule.js" defer></script>
+    <!-- Main Script -->
+    <script src="js/script.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

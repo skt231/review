@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Galaxy - Personal Blog Template</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- ** Plugins Needed for the Project ** -->
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/fontawesome/css/all.css">
+
+    <!-- Main Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--Favicon-->
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+    <!-- style -->
+
+    <style>
+        .stage {
+            background-color: rgb(0, 0, 0);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .seat-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            /* 수평으로 고르게 배치 */
+            align-content: space-around;
+            /* 수직으로 고르게 배치 */
+            gap: 5px;
+            /* 가로와 세로 간격 설정 */
+            height: 50vh;
+            /* 화면 높이에 맞춤 */
+        }
+
+        .seat {
+            width: calc(10% - 20px);
+            /* 화면 너비에 따라 동적으로 조절됨 */
+            height: 40px;
+            background-color: rgb(255, 255, 255);
+            margin: 5px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .selected {
+            background-color: red;
+        }
+
+        .payment-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .top-right {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .top-right a {
+            color: aliceblue;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- 소통페이지 -->
+    <!-- START preloader-wrapper -->
+    <div class="preloader-wrapper">
+        <div class="preloader-inner">
+            <div class="spinner-border text-red"></div>
+        </div>
+    </div>
+    <!-- END preloader-wrapper -->
+
+    <!-- START main-wrapper -->
+    <section class="d-flex">
+
+        <!-- start of sidenav -->
+        <aside>
+            <div class="sidenav position-sticky d-flex flex-column justify-content-between">
+                <a class="navbar-brand" href="index.html" class="logo">
+                    <img src="images/logo.png" alt="">
+                </a>
+                <!-- end of navbar-brand -->
+
+                <div class="navbar navbar-dark my-4 p-0 font-primary">
+                    <ul class="navbar-nav w-100">
+                        <li class="nav-item active">
+                            <a class="nav-link text-white px-0 pt-0" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white px-0" href="store.html">스토어</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white px-0" href="###">소통공간</a>
+                        </li>
+                        <li class="nav-item  accordion">
+                            <div id="drop-menu" class="drop-menu collapse">
+                                <a class="d-block " href="reservation.html">예매하기</a>
+                                <a class="d-block " href="playList.html">전체 공연</a>
+                                <a class="d-block " href="###">예매현황</a>
+                            </div>
+                            <a class="nav-link text-white" href="#!" role="button" data-toggle="collapse"
+                                data-target="#drop-menu" aria-expanded="false" aria-controls="drop-menu">예매하기</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link text-white px-0" href="###">MyPage</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end of navbar -->
+                <br>
+            </div>
+        </aside>
+        <!-- end of sidenav -->
+        <div class="top-right">
+            <span><a href="login.html">login</a></span> &nbsp; <span><a href="resisterUser.html">resister</a></span>
+        </div>
+        <div class="main-content">
+            <!-- start of mobile-nav -->
+            <header class="mobile-nav pt-4">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-6">
+                            <a href="index.html">
+                                <img src="images/logo.png" alt="">
+                            </a>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="nav-toggle bg-transparent border text-white">
+                                <span class="fas fa-bars"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="nav-toggle-overlay"></div>
+            <!-- end of mobile-nav -->
+            <div class="container py-4 my-5">
+
+                <div class="col-md-12 m-30">
+                    <div class="stage">
+                        <h1>무대</h1>
+                    </div>
+                    <div class="seat-container" id="seatContainer">
+                        <!-- 좌석은 JavaScript로 동적으로 생성됩니다. -->
+                    </div>
+                    <div class="payment-container">
+                        <h2>총 결제액: <span id="totalAmount">0</span>원</h2>
+                        <button id="resetButton">초기화</button>
+                        <button id="paymentButton">결제</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+    <!-- END main-wrapper -->
+
+    <!-- All JS Files -->
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="js\imageModule.js" defer></script>
+    <!-- Main Script -->
+    <script src="js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        async function fetchXML(url) {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Network response was not ok");
+            const text = await response.text();
+            const parser = new DOMParser();
+            return parser.parseFromString(text, "text/xml");
+        }
+
+        async function getPcseguidanceValue(mt20id) {
+            const xmlDoc = await fetchXML(`http://www.kopis.or.kr/openApi/restful/pblprfr/${mt20id}?service=b0a82e699a254319bbe6decc02de2489`);
+            const pcseguidanceElement = xmlDoc.querySelector('pcseguidance');
+            if (pcseguidanceElement) {
+                return Number(pcseguidanceElement.textContent.replace(/[^0-9]/g, ''));
+            }
+            return 0;
+        }
+
+        const seatContainer = document.getElementById('seatContainer');
+        const totalAmountElement = document.getElementById('totalAmount');
+        const resetButton = document.getElementById('resetButton');
+        const paymentButton = document.getElementById('paymentButton');
+
+        const seats = [];
+        let totalAmount = 0;
+
+        const totalRows = 5;
+        const seatsPerRow = 10;
+        const totalSeats = totalRows * seatsPerRow;
+
+        let seatPrice = 0;  // 기본 좌석 가격 설정
+
+        window.addEventListener('load', async () => {
+            const mt20id = new URL(window.location.href).searchParams.get("mt20id");
+            if (mt20id) {
+                seatPrice = await getPcseguidanceValue(mt20id);
+                console.log(seatPrice);
+            }
+        });
+
+        for (let i = 1; i <= totalSeats; i++) {
+            const seat = document.createElement('div');
+            seat.className = `seat`;
+            seat.id = `s-${i}`;
+            seat.textContent = i;
+
+            seat.addEventListener('click', () => {
+                if (!seats.includes(i)) {
+                    seats.push(i);
+                    seat.classList.add('selected');
+                    totalAmount += seatPrice;
+                } else {
+                    const index = seats.indexOf(i);
+                    if (index > -1) {
+                        seats.splice(index, 1);
+                        seat.classList.remove('selected');
+                        totalAmount -= seatPrice;
+                    }
+                }
+                totalAmountElement.textContent = totalAmount;
+            });
+            seatContainer.appendChild(seat);
+        }
+
+        paymentButton.addEventListener('click', () => {
+            alert(`결제가 완료되었습니다. 총 결제액: ${totalAmount}원`);
+            resetSeats();
+        });
+
+        resetButton.addEventListener('click', () => {
+            resetSeats();
+        });
+
+        function resetSeats() {
+            seats.length = 0;
+            totalAmount = 0;
+            const allSeats = document.querySelectorAll('.seat');
+            allSeats.forEach(seat => {
+                seat.classList.remove('selected');
+            });
+            totalAmountElement.textContent = totalAmount;
+        }
+    </script>
+</body>
+
+</html>

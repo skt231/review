@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Galaxy - Personal Blog Template</title>
+
+    <!-- mobile responsive meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap & FontAwesome -->
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/fontawesome/css/all.css">
+
+    <!-- Main Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+
+    <!-- Inline Styles -->
+    <style>
+        body {
+            max-width: 788px;
+            margin: 0 auto;
+        }
+
+        #info img {
+            margin: 40px;
+            width: 400px;
+        }
+
+        #info td {
+            border: white 1px dotted;
+        }
+
+        .main-content {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Preloader Wrapper -->
+    <div class="preloader-wrapper">
+        <div class="preloader-inner">
+            <div class="spinner-border text-red"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <table id="info">
+            <tr>
+                <td rowspan="6"><img id="poster" src="" alt=""></td>
+                <td>제목 : <span id="title"></span></td>
+            </tr>
+            <tr>
+                <td>공연날짜 : <span id="prStart"></span> ~ <span id="prEnd"></span><br><span id="prDatetime"></span></td>
+            </tr>
+            <tr>
+                <td>공연시간 : <span id="prtime"></span></td>
+            </tr>
+            <tr>
+                <td>장소 : <span id="prloc"></span></td>
+            </tr>
+            <tr>
+                <td>출연진 : <span id="prcast"></span> / <span id="prcrew"></span></td>
+            </tr>
+            <tr>
+                <td>가격 : <span id="prprice"></span></td>
+            </tr>
+            <tr>
+                <td><button>예매하기</button></td>
+                <td><button>취소하기</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src="plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="js/imageModule.js" defer></script>
+    <script src="js/script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+    async function displayInfo() {
+        const data = await fetchAndInfo();
+
+        for (const key in data) {
+            if (document.querySelector(`#${key}`)) {
+                if (key === 'poster') {
+                    document.querySelector(`#${key}`).src = data[key];
+                } else {
+                    document.querySelector(`#${key}`).textContent = data[key];
+                }
+            }
+        }
+    }
+
+    displayInfo();
+});
+
+    </script>
+</body>
+
+</html>

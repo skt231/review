@@ -1,0 +1,331 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>빠른 예매 템플릿</title>
+<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+<link rel="icon" href="images/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    .quick-reserve {
+        border: 1px solid #ddd;
+        padding: 20px;
+        width: 600px;
+        display: flex;
+        position: relative;
+    }
+
+    .option-box {
+        flex: 1;
+        padding: 10px;
+        border-right: 1px solid #ddd;
+    }
+
+    .option-box:last-child {
+        border-right: none;
+    }
+
+    .option-label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    #movie li {
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid #ddd;
+    }
+
+    ul:not(#movie) {
+        display: flex;
+    }
+
+    ul:not(#movie) li {
+        margin-right: 10px;
+        padding: 5px;
+        border: 1px solid #ddd;
+    }
+
+    .calendar {
+        text-align: center;
+        margin-bottom: 20px;
+        /* 간격을 늘리기 위한 마진 추가 */
+    }
+
+    button {
+        padding: 8px 12px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        font-size: 0.8rem;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #titleContainer div a,
+    #time li a {
+        font-size: 15px;
+        text-decoration: none;
+    }
+
+    /* 마우스 오버 시 */
+    #titleContainer div a:hover {
+        background-color: #e0e0e0;
+        /* 라이트 그레이 */
+        color: black;
+        text-decoration: none;
+    }
+
+    /* 클릭 시 */
+    #titleContainer div a:active {
+        background-color: #b0b0b0;
+        /* 미디엄 그레이 */
+        color: white;
+    }
+
+    /* 선택된 경우 */
+    #titleContainer div a.selected {
+        background-color: #004F4D;
+        /* 파란색 */
+        color: #ffd6cd;
+    }
+
+    #time li a:hover {
+        background-color: #e0e0e0;
+        /* 라이트 그레이 */
+        color: black;
+        text-decoration: none;
+    }
+
+    #time li a:active {
+        background-color: #b0b0b0;
+        /* 미디엄 그레이 */
+        color: white;
+    }
+
+    #time li a.selected {
+        background-color: #004F4D;
+        color: #ffd6cd;
+    }
+</style>
+</head>
+
+<body>
+
+    <div class="quick-reserve">
+
+        <div class="option-box">
+            <label class="option-label" for="movie">영화:</label>
+            <ul id="movie">
+                <li id="titleContainer" class="row"
+                    data-xmlurl="http://www.kopis.or.kr/openApi/restful/pblprfr?service=b0a82e699a254319bbe6decc02de2489&stdate=20230901&eddate=20230910&cpage=1&rows=5&prfstate=02&signgucode=11&signgucodesub=1111&kidstate=Y">
+                </li>
+
+            </ul>
+        </div>
+
+
+        <div class="option-box">
+            <label class="option-label" for="datepicker">날짜:</label>
+            <div class="calendar">
+                <input type="text" id="datepicker" placeholder="요일 선택">
+            </div>
+            <label class="option-label" for="location">장소:</label>
+            <div id="location">
+                <span></span>
+            </div>
+        </div>
+
+        <div class="option-box">
+            <label class="option-label" for="time">시간:</label>
+            <ul id="time">
+
+            </ul>
+        </div>
+
+        <button type="button" id="next">다음으로</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js\imageModule.js" defer></script>
+    <script>
+        let selectableDays = [];
+        let minSelectableDate = null;
+        let maxSelectableDate = null;
+
+        function extractSchedule(dtguidance) {
+            const daysMapping = {
+                '월요일': 1,
+                '화요일': 2,
+                '수요일': 3,
+                '목요일': 4,
+                '금요일': 5,
+                '토요일': 6,
+                '일요일': 0,
+                'HOL': [6, 0]
+            };
+
+            const schedules = dtguidance.split(', ');
+            const result = [];
+            for (const schedule of schedules) {
+                const [dayPart, timePart] = schedule.split('(');
+                const times = timePart ? timePart.replace(')', '').split(',').map(time => time.trim()) : [];
+                if (dayPart.includes('~')) {
+                    const [start, end] = dayPart.split('~').map(part => part.trim());
+                    let currentDay = daysMapping[start];
+                    const endDay = daysMapping[end];
+                    while (currentDay !== endDay) {
+                        result.push({ day: currentDay, times: times });
+                        currentDay = (currentDay + 1) % 7;
+                    }
+                    result.push({ day: endDay, times: times });
+                } else {
+                    result.push({ day: daysMapping[dayPart.trim()], times: times });
+                }
+            }
+            return result;
+        }
+
+        $("#datepicker").datepicker({
+            dateFormat: "yy-mm-dd",
+            beforeShowDay: function (date) {
+                const day = date.getDay();
+                return [selectableDays.some(schedule =>
+                    Array.isArray(schedule.day) ? schedule.day.includes(day) : schedule.day === day
+                )];
+            },
+            onSelect: function (dateText, datePickerInstance) {
+                const selectedDate = new Date(dateText);
+                const dayOfWeek = selectedDate.getDay();
+
+                const matchedSchedule = selectableDays.find(schedule =>
+                    Array.isArray(schedule.day) ? schedule.day.includes(dayOfWeek) : schedule.day === dayOfWeek
+                );
+
+                if (matchedSchedule) {
+                    const timeList = document.getElementById('time');
+                    timeList.innerHTML = "";  // 기존에 있는 시간 목록을 지웁니다.
+
+                    matchedSchedule.times.forEach(time => {
+                        const timeItem = document.createElement('li');
+
+                        // 여기서 남은 좌석을 계산합니다. 
+                        const reservedSeats = Math.floor(Math.random() * 51);
+                        const remainingSeats = 50 - reservedSeats;
+
+                        const timeLink = document.createElement('a');
+                        timeLink.href = "#";  // 여기에 원하는 링크를 넣으실 수 있습니다.
+                        timeLink.textContent = `${time} (남은 좌석: ${remainingSeats}/50)`; // 시간과 남은 좌석 수 표시
+
+                        timeItem.appendChild(timeLink);
+                        timeList.appendChild(timeItem);
+                    });
+
+
+                    document.querySelectorAll("#time li a").forEach(link => {
+                        link.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            document.querySelectorAll("#time li a").forEach(innerLink => innerLink.classList.remove('selected'));
+                            this.classList.add('selected');
+
+                            const mt20id = document.querySelector("#titleContainer div a.selected").dataset.mt20id;
+                            console.log(mt20id);
+                        });
+                    });
+                }
+            }
+        });
+
+        document.getElementById('next').addEventListener('click', function () {
+            const selectedMovieLink = document.querySelector("#titleContainer div a.selected");
+            if (selectedMovieLink) {
+                const mt20id = selectedMovieLink.dataset.mt20id;
+                window.location.href = `test10.html?mt20id=${mt20id}`;
+            } else {
+                alert("영화를 선택해주세요.");
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            const titleContainer = document.getElementById('titleContainer');
+            const url = titleContainer.dataset.xmlurl;
+            const xmlData = await fetchXML(url);
+            const items = xmlData.querySelectorAll('db');
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('col-md-4');
+
+                const a = document.createElement('a');
+                a.href = "#";
+                a.textContent = item.querySelector('prfnm').textContent;
+                a.dataset.mt20id = item.querySelector('mt20id').textContent;
+
+                div.appendChild(a);
+                titleContainer.appendChild(div);
+            });
+
+            document.querySelectorAll("#titleContainer div a").forEach(link => {
+                link.addEventListener("click", async function (event) {
+                    event.preventDefault();
+                    document.querySelectorAll("#titleContainer div a").forEach(innerLink => innerLink.classList.remove('selected'));
+                    this.classList.add('selected');
+
+                    const mt20id = this.dataset.mt20id;
+                    const detailDataXML = await fetchXML(`http://www.kopis.or.kr/openApi/restful/pblprfr/${mt20id}?service=b0a82e699a254319bbe6decc02de2489`);
+
+                    const prloc = detailDataXML.querySelector('fcltynm').textContent;
+                    document.getElementById('location').innerHTML = prloc;
+
+                    const prfpdfromNode = detailDataXML.querySelector('prfpdfrom');
+                    const prfpdtoNode = detailDataXML.querySelector('prfpdto');
+                    if (prfpdfromNode && prfpdtoNode) {
+                        const fromDate = new Date(prfpdfromNode.textContent);
+                        const toDate = new Date(prfpdtoNode.textContent);
+                        $("#datepicker").datepicker("option", "minDate", fromDate);
+                        $("#datepicker").datepicker("option", "maxDate", toDate);
+                    }
+
+                    const dtguidanceNode = detailDataXML.querySelector('dtguidance');
+                    if (dtguidanceNode) {
+                        const scheduleData = extractSchedule(dtguidanceNode.textContent);
+                        selectableDays = scheduleData;
+                    }
+                });
+            });
+        });
+
+        async function fetchXML(url) {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Network response was not ok");
+            const text = await response.text();
+            const parser = new DOMParser();
+            return parser.parseFromString(text, "text/xml");
+        }
+    </script>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booking.dao.userDao">
+	<insert id="createUser">INSERT INTO users (username, password, email)
+		VALUES
+		(#{username},#{password},#{email})
+	</insert>
+	<select id="listAll" resultType="com.booking.dto.userDto">
+		<![CDATA[select * from users where id>0 order by id desc]]>
+	</select>
+	<select id="readUserById" resultType="userDto">
+		select * from users where
+		username=#{username}
+	</select>
+	<update id="updateUser"> update users password = #{password},
+		email = #{email}
+		WHERE username = #{username}
+	</update>
+	<delete id="deleteUser"> delete from users where id = #{id}
+	</delete>
+</mapper>

@@ -11,6 +11,7 @@
         }
     </style>
     <title>Document</title>
+    <script src="js\imageModule.js" defer></script>
 </head>
 
 <body>
@@ -24,7 +25,6 @@
                 <td>공연날짜:<span id="prStart"></span> &nbsp ~ &nbsp <span id="prEnd"></span><br> &emsp; &emsp; &emsp;
                     <span id="prDatetime"></span>
                 </td>
-
             </tr>
             <tr>
                 <td>공연시간: <span id="prtime"></span></td>
@@ -44,102 +44,42 @@
             </tr>
         </table>
     </div>
+
     <script>
-        // URL에서 데이터 추출
-        const urlParams = new URLSearchParams(window.location.search);
-        const data = urlParams.get('data');
-        console.log(data);
-        const xmlUrl = `http://www.kopis.or.kr/openApi/restful/pblprfr/${data}?service=b0a82e699a254319bbe6decc02de2489`;
+        document.addEventListener("DOMContentLoaded", function () {
+            async function fetchDataAndDisplay() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const data = urlParams.get('data');
+                const xmlUrl = `http://www.kopis.or.kr/openApi/restful/pblprfr/${data}?service=b0a82e699a254319bbe6decc02de2489`;
 
-        fetch(xmlUrl)
-            .then(response => response.text())
-            .then(xmlString => {
-                // XML 파싱
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+                const xmlDoc = await fetchXML(xmlUrl); // 여기서 fetchXML을 호출합니다.
 
-                // XML에서 JSON으로 변환
-                const jsonObject = xmlToJson(xmlDoc);
-                const titledb = jsonObject.dbs.db.prfnm["#text"]["#text"];
-                const startDatedb = jsonObject.dbs.db.prfpdfrom["#text"]["#text"];
-                const endDatedb = jsonObject.dbs.db.prfpdto["#text"]["#text"];
-                const prtimedb = jsonObject.dbs.db.dtguidance["#text"]["#text"];
-                const timedb = jsonObject.dbs.db.prfruntime["#text"]["#text"];
-                const locdb = jsonObject.dbs.db.fcltynm["#text"]["#text"];
-                const castdb = jsonObject.dbs.db.prfcast["#text"]["#text"];
-                const crewdb = jsonObject.dbs.db.prfcrew["#text"]["#text"];
-                const pricedb = jsonObject.dbs.db.pcseguidance["#text"]["#text"];
-                const posterdb = jsonObject.dbs.db.poster["#text"]["#text"];
+                if (!xmlDoc) return;
+                const titledb = xmlDoc.querySelector('prfnm').textContent;
+                const startDatedb = xmlDoc.querySelector('prfpdfrom').textContent;
+                const endDatedb = xmlDoc.querySelector('prfpdto').textContent;
+                const prtimedb = xmlDoc.querySelector('dtguidance').textContent;
+                const timedb = xmlDoc.querySelector('prfruntime').textContent;
+                const locdb = xmlDoc.querySelector('fcltynm').textContent;
+                const castdb = xmlDoc.querySelector('prfcast').textContent;
+                const crewdb = xmlDoc.querySelector('prfcrew').textContent;
+                const pricedb = xmlDoc.querySelector('pcseguidance').textContent;
+                const posterdb = xmlDoc.querySelector('poster').textContent;
 
-                // 이미지 로딩 이벤트 핸들러
-                const poster = document.querySelector('#poster');
-                poster.onload = function () {
-                    // 이미지가 로드된 후에 데이터 설정
-                    const title = document.querySelector('#title');
-                    const startDate = document.querySelector('#prStart');
-                    const endDate = document.querySelector('#prEnd');
-                    const prDateTime = document.querySelector('#prDatetime');
-                    const time = document.querySelector('#prtime');
-                    const loc = document.querySelector('#prloc');
-                    const cast = document.querySelector('#prcast');
-                    const crew = document.querySelector('#prcrew');
-                    const price = document.querySelector('#prprice');
-
-                    poster.src = posterdb;
-                    title.textContent = titledb;
-                    startDate.textContent = startDatedb;
-                    endDate.textContent = endDatedb;
-                    prDateTime.textContent = prtimedb;
-                    time.textContent = timedb;
-                    loc.textContent = locdb;
-                    cast.textContent = castdb;
-                    crew.textContent = crewdb;
-                    price.textContent = pricedb;
-                };
-
-                // 이미지 소스 설정
-                poster.src = posterdb;
-            })
-            .catch(error => {
-                console.error('Error fetching XML:', error);
-            });
-
-        // XML을 JSON으로 변환하는 함수
-        function xmlToJson(xml) {
-            const result = {};
-
-            if (xml.nodeType === 1) {
-                if (xml.attributes.length > 0) {
-                    result['@attributes'] = {};
-                    for (let i = 0; i < xml.attributes.length; i++) {
-                        const attribute = xml.attributes[i];
-                        result['@attributes'][attribute.nodeName] = attribute.nodeValue;
-                    }
-                }
-            } else if (xml.nodeType === 3) {
-                result['#text'] = xml.nodeValue;
+                document.querySelector('#poster').src = posterdb;
+                document.querySelector('#title').textContent = titledb;
+                document.querySelector('#prStart').textContent = startDatedb;
+                document.querySelector('#prEnd').textContent = endDatedb;
+                document.querySelector('#prDatetime').textContent = prtimedb;
+                document.querySelector('#prtime').textContent = timedb;
+                document.querySelector('#prloc').textContent = locdb;
+                document.querySelector('#prcast').textContent = castdb;
+                document.querySelector('#prcrew').textContent = crewdb;
+                document.querySelector('#prprice').textContent = pricedb;
             }
 
-            if (xml.hasChildNodes()) {
-                for (let i = 0; i < xml.childNodes.length; i++) {
-                    const item = xml.childNodes[i];
-                    const nodeName = item.nodeName;
-
-                    if (typeof result[nodeName] === 'undefined') {
-                        result[nodeName] = xmlToJson(item);
-                    } else {
-                        if (typeof result[nodeName].push === 'undefined') {
-                            const old = result[nodeName];
-                            result[nodeName] = [];
-                            result[nodeName].push(old);
-                        }
-                        result[nodeName].push(xmlToJson(item));
-                    }
-                }
-            }
-
-            return result;
-        }
+            fetchDataAndDisplay(); // 함수 호출
+        });
     </script>
 </body>
 

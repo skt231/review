@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE Board SET depthno = depthno + 1
 		WHERE bno =
 		#{bno } AND depthno >
-		#{depthno }
+		#{depthno}
 	</update>
 
 	<insert id="reply_insert">
