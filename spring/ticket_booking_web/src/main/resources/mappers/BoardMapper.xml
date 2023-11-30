@@ -8,7 +8,7 @@
 	<insert id="insertBoard">
 		INSERT INTO board (bulletin,user_id, title, content,
 		username,depthno,indent)
-		VALUES (#{bulletin},1, #{title}, #{content},
+		VALUES (#{bulletin},#{user_id}, #{title}, #{content},
 		#{username},0,0)
 	</insert>
 
@@ -79,9 +79,9 @@
 	</update>
 
 	<insert id="comment_insert">
-		INSERT INTO Board(user_id, title, content, username,
+		INSERT INTO Board(bulletin,user_id, title, content, username,
 		viewcnt, depthno,indent)
-		VALUES (1, #{title}, #{content}, #{username},
+		VALUES (#{bulletin},#{user_id}, #{title}, #{content}, #{username},
 		0, #{depthno}, #{indent})
 	</insert>
 	<select id="getBoardBybull"

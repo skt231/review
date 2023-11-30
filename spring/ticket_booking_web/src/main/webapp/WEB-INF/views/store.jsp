@@ -64,7 +64,7 @@
 		<aside>
 			<div
 				class="sidenav position-sticky d-flex flex-column justify-content-between">
-				<a class="navbar-brand" href="home" class="logo"> <%-- <img src="${pageContext.request.contextPath}/resources/images/logo.png" 
+				<a class="navbar-brand" href="/app/" class="logo"> <%-- <img src="${pageContext.request.contextPath}/resources/images/logo.png" 
 					alt=""> --%> <img src="<c:url value='/resources/images/logo.png'/>"
 					alt="">
 				</a>
@@ -73,15 +73,16 @@
 				<div class="navbar navbar-dark my-4 p-0 font-primary">
 					<ul class="navbar-nav w-100">
 						<li class="nav-item active"><a
-							class="nav-link text-white px-0 pt-0" href="home">Home</a></li>
+							class="nav-link text-white px-0 pt-0" href="/app/">Home</a></li>
 						<li class="nav-item "><a class="nav-link text-white px-0"
-							href="store.html">스토어</a></li>
+							href="store">스토어</a></li>
 						<li class="nav-item "><a class="nav-link text-white px-0"
-							href="###">소통공간</a></li>
+							href="/app/board/list">소통공간</a></li>
 						<li class="nav-item  accordion">
 							<div id="drop-menu" class="drop-menu collapse">
-								<a class="d-block " href="###">예매하기</a> <a class="d-block "
-									href="###">전체 공연</a> <a class="d-block " href="###">예매현황</a>
+								<a class="d-block " href="/app/reservation">예매하기</a> <a
+									class="d-block " href="/app/playList">전체 공연</a> <a
+									class="d-block " href="/app/user/listAll">예매현황</a>
 							</div> <a class="nav-link text-white" href="#!" role="button"
 							data-toggle="collapse" data-target="#drop-menu"
 							aria-expanded="false" aria-controls="drop-menu">예매하기</a>
@@ -90,13 +91,23 @@
 							href="###">MyPage</a></li>
 					</ul>
 				</div>
-				<!-- end of navbar -->
-				<br>
 			</div>
+			<!-- end of navbar -->
+			<br>
+
 		</aside>
+
 		<div class="top-right">
-			<span><a href="login.html">login</a></span> &nbsp; <span><a
-				href="resisterUser.html">resister</a></span>
+		<c:choose>
+				<c:when test="${empty userses}">
+					<span><a href="/app/user/login">로그인</a></span> &nbsp; <span><a
+						href="/app/user/linkRegister">등록</a></span>
+				</c:when>
+				<c:otherwise>
+					<span>${userses.username}!</span> &nbsp; <span><a
+						href="/app/user/logout">로그아웃</a></span>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<!-- end of sidenav -->
 		<!-- -------------------------------------------------------------------------------------------------------------------------------------- -->

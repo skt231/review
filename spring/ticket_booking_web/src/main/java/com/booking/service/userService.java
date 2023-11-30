@@ -2,6 +2,8 @@ package com.booking.service;
 
 import java.util.List;
 
+import org.apache.catalina.User;
+
 import com.booking.dto.userDto;
 
 public interface userService {
@@ -9,5 +11,6 @@ public interface userService {
 	public userDto getUserById(int id) throws Exception;
 	public  void updateUser(userDto user) throws Exception;
 	public void deleteUser(int id) throws Exception;
-	public List<userDto> getAllUsers() throws Exception; 
+	public List<userDto> getAllUsers() throws Exception;
+	public userDto loginUser(String username, String password) throws Exception;
 }

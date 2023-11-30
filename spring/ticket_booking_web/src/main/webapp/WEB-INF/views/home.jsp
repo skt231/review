@@ -76,7 +76,7 @@
 		<aside>
 			<div
 				class="sidenav position-sticky d-flex flex-column justify-content-between">
-				<a class="navbar-brand" href="index.html" class="logo"> <img
+				<a class="navbar-brand" href="/app/" class="logo"> <img
 					src="${pageContext.request.contextPath}/resources/images/logo.png"
 					alt="">
 				</a>
@@ -85,16 +85,16 @@
 				<div class="navbar navbar-dark my-4 p-0 font-primary">
 					<ul class="navbar-nav w-100">
 						<li class="nav-item active"><a
-							class="nav-link text-white px-0 pt-0" href="index.html">Home</a>
+							class="nav-link text-white px-0 pt-0" href="/app/">Home</a>
 						</li>
 						<li class="nav-item "><a class="nav-link text-white px-0"
-							href="store">스토어</a></li>
+							href="/app/store">스토어</a></li>
 						<li class="nav-item "><a class="nav-link text-white px-0"
-							href="/app/board/list">소통공간</a></li>
+							href="/app/board">소통공간</a></li>
 						<li class="nav-item  accordion">
 							<div id="drop-menu" class="drop-menu collapse">
-								<a class="d-block " href="reservation">예매하기</a> <a
-									class="d-block " href="playList.html">전체 공연</a> <a
+								<a class="d-block " href="/app/reservation">예매하기</a> <a
+									class="d-block " href="/app/playList">전체 공연</a> <a
 									class="d-block " href="/app/user/listAll">예매현황</a>
 							</div> <a class="nav-link text-white" href="#!" role="button"
 							data-toggle="collapse" data-target="#drop-menu"
@@ -110,8 +110,16 @@
 		</aside>
 		<!-- 끝: sidenav -->
 		<div class="top-right">
-			<span><a href="login.html">로그인</a></span> &nbsp; <span><a
-				href="/app/user/linkRegister">등록</a></span>
+			<c:choose>
+				<c:when test="${empty userses}">
+					<span><a href="/app/user/login">로그인</a></span> &nbsp; <span><a
+						href="/app/user/linkRegister">등록</a></span>
+				</c:when>
+				<c:otherwise>
+					<span>${userses.username}!</span> &nbsp; <span><a
+						href="/app/user/logout">로그아웃</a></span>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div class="main-content">
 			<!-- 시작: mobile-nav -->

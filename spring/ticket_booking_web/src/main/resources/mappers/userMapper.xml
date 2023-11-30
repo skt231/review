@@ -20,4 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	<delete id="deleteUser"> delete from users where id = #{id}
 	</delete>
+	<select id="getUserByUsername" resultType="userDto">
+		SELECT * FROM users WHERE username = #{username}
+	</select>
 </mapper>

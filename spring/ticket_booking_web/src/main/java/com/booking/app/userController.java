@@ -1,5 +1,8 @@
 package com.booking.app;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +42,6 @@ public class userController {
 		return "home";
 	}
 
-
 	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
 	public String listAll(Model model) throws Exception {
 		logger.info("show all list...");
@@ -72,4 +74,43 @@ public class userController {
 		rttr.addFlashAttribute("msg", "success");
 		return "redirect:/user/listAll";
 	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginPage() throws Exception {
+		return "/user/login";
+	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String loginUserPOST(userDto userses, String username, String password, HttpServletRequest request,
+			 RedirectAttributes rttr) throws Exception {
+		userses = service.loginUser(username, password);
+
+		if (userses != null) {
+			// 로그인 성공
+			System.out.println(userses);
+			HttpSession session = request.getSession();
+			session.setAttribute("userses", userses);
+			return "redirect:/"; // 로그인 성공 시 대시보드 페이지로 이동
+		} else {
+			// 로그인 실패
+			rttr.addFlashAttribute("msg", "failure");
+			return "redirect:/user/login"; // 로그인 실패 시 홈 페이지로 리다이렉트
+		}
+	}
+
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public String dashboardPage() throws Exception {
+		return "/dashboard"; // JSP 파일명 (확장자 없이)
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request) {
+		// 세션에서 사용자 정보 삭제
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+
+		// 로그아웃 후 홈 페이지로 리다이렉트
+		return "redirect:/";
+	}
+
 }

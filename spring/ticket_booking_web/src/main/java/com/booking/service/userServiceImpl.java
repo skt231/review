@@ -17,35 +17,53 @@ public class userServiceImpl implements userService {
 
 	@Override
 	public void addUser(userDto user) throws Exception {
-		userDao dao=sqlSession.getMapper(userDao.class);
+		userDao dao = sqlSession.getMapper(userDao.class);
 		dao.createUser(user);
 
 	}
 
 	@Override
 	public userDto getUserById(int id) throws Exception {
-		userDao dao=sqlSession.getMapper(userDao.class);
+		userDao dao = sqlSession.getMapper(userDao.class);
 		return dao.readUserById(id);
 	}
 
 	@Override
 	public void updateUser(userDto user) throws Exception {
-		userDao dao=sqlSession.getMapper(userDao.class);
+		userDao dao = sqlSession.getMapper(userDao.class);
 		dao.updateUser(user);
 	}
 
 	@Override
 	public void deleteUser(int id) throws Exception {
-		userDao dao=sqlSession.getMapper(userDao.class);
+		userDao dao = sqlSession.getMapper(userDao.class);
 		dao.deleteUser(id);
 	}
 
 	@Override
 	public List<userDto> getAllUsers() throws Exception {
-		userDao dao=sqlSession.getMapper(userDao.class);
-		List<userDto> dtos=dao.listAll();
+		userDao dao = sqlSession.getMapper(userDao.class);
+		List<userDto> dtos = dao.listAll();
 		System.out.println(dtos);
 		return dtos;
+	}
+
+	@Override
+	public userDto loginUser(String username, String password) throws Exception {
+		userDao dao = sqlSession.getMapper(userDao.class);
+		userDto user = dao.getUserByUsername(username);
+
+		if (user != null) {
+			if (username.equals(user.getUsername())) {
+				if (password.equals(user.getPassword())) {
+					// 비밀번호가 일치하면 사용자 정보 반환
+					return user;
+				}
+			}
+		}
+
+		// 사용자가 없거나 비밀번호가 일치하지 않을 경우 null 반환
+		return null;
 	}
 
 }

@@ -201,15 +201,16 @@ button:hover {
 			<div class="navbar navbar-dark my-4 p-0 font-primary">
 				<ul class="navbar-nav w-100">
 					<li class="nav-item active"><a
-						class="nav-link text-white px-0 pt-0" href="home">Home</a></li>
+						class="nav-link text-white px-0 pt-0" href="/app/home">Home</a></li>
 					<li class="nav-item "><a class="nav-link text-white px-0"
-						href="store.html">스토어</a></li>
+						href="store">스토어</a></li>
 					<li class="nav-item "><a class="nav-link text-white px-0"
-						href="###">소통공간</a></li>
+						href="/app/board/list">소통공간</a></li>
 					<li class="nav-item  accordion">
 						<div id="drop-menu" class="drop-menu collapse">
-							<a class="d-block " href="###">예매하기</a> <a class="d-block "
-								href="###">전체 공연</a> <a class="d-block " href="###">예매현황</a>
+							<a class="d-block " href="reservation">예매하기</a> <a
+								class="d-block " href="playList.html">전체 공연</a> <a
+								class="d-block " href="/app/user/listAll">예매현황</a>
 						</div> <a class="nav-link text-white" href="#!" role="button"
 						data-toggle="collapse" data-target="#drop-menu"
 						aria-expanded="false" aria-controls="drop-menu">예매하기</a>
@@ -223,8 +224,16 @@ button:hover {
 		</div>
 	</aside>
 	<div class="top-right">
-		<span><a href="login.html">login</a></span> &nbsp; <span><a
-			href="resisterUser.html">resister</a></span>
+		<c:choose>
+			<c:when test="${empty userses}">
+				<span><a href="/app/user/login">로그인</a></span> &nbsp; <span><a
+					href="/app/user/linkRegister">등록</a></span>
+			</c:when>
+			<c:otherwise>
+				<span>${userses.username}!</span> &nbsp; <span><a
+					href="/app/user/logout">로그아웃</a></span>
+			</c:otherwise>
+		</c:choose>
 	</div>
 	<!-- end of sidenav -->
 	<!-- -------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -303,159 +312,159 @@ button:hover {
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script>
-let selectableDays = [];
-let minSelectableDate = null;
-let maxSelectableDate = null;
+        let selectableDays = [];
+        let minSelectableDate = null;
+        let maxSelectableDate = null;
 
-function extractSchedule(dtguidance) {
-    const daysMapping = {
-        '월요일': 1,
-        '화요일': 2,
-        '수요일': 3,
-        '목요일': 4,
-        '금요일': 5,
-        '토요일': 6,
-        '일요일': 0,
-        'HOL': [6, 0]
-    };
+        function extractSchedule(dtguidance) {
+            const daysMapping = {
+                '월요일': 1,
+                '화요일': 2,
+                '수요일': 3,
+                '목요일': 4,
+                '금요일': 5,
+                '토요일': 6,
+                '일요일': 0,
+                'HOL': [6, 0]
+            };
 
-    const schedules = dtguidance.split(', ');
-    const result = [];
-    for (const schedule of schedules) {
-        const [dayPart, timePart] = schedule.split('(');
-        const times = timePart ? timePart.replace(')', '').split(',').map(time => time.trim()) : [];
-        if (dayPart.includes('~')) {
-            const [start, end] = dayPart.split('~').map(part => part.trim());
-            let currentDay = daysMapping[start];
-            const endDay = daysMapping[end];
-            while (currentDay !== endDay) {
-                result.push({ day: currentDay, times: times });
-                currentDay = (currentDay + 1) % 7;
+            const schedules = dtguidance.split(', ');
+            const result = [];
+            for (const schedule of schedules) {
+                const [dayPart, timePart] = schedule.split('(');
+                const times = timePart ? timePart.replace(')', '').split(',').map(time => time.trim()) : [];
+                if (dayPart.includes('~')) {
+                    const [start, end] = dayPart.split('~').map(part => part.trim());
+                    let currentDay = daysMapping[start];
+                    const endDay = daysMapping[end];
+                    while (currentDay !== endDay) {
+                        result.push({ day: currentDay, times: times });
+                        currentDay = (currentDay + 1) % 7;
+                    }
+                    result.push({ day: endDay, times: times });
+                } else {
+                    result.push({ day: daysMapping[dayPart.trim()], times: times });
+                }
             }
-            result.push({ day: endDay, times: times });
-        } else {
-            result.push({ day: daysMapping[dayPart.trim()], times: times });
+            return result;
         }
-    }
-    return result;
-}
 
-$("#datepicker").datepicker({
-    dateFormat: "yy-mm-dd",
-    beforeShowDay: function (date) {
-        const day = date.getDay();
-        return [selectableDays.some(schedule =>
-            Array.isArray(schedule.day) ? schedule.day.includes(day) : schedule.day === day
-        )];
-    },
-    onSelect: function (dateText, datePickerInstance) {
-        const selectedDate = new Date(dateText);
-        const dayOfWeek = selectedDate.getDay();
+        $("#datepicker").datepicker({
+            dateFormat: "yy-mm-dd",
+            beforeShowDay: function (date) {
+                const day = date.getDay();
+                return [selectableDays.some(schedule =>
+                    Array.isArray(schedule.day) ? schedule.day.includes(day) : schedule.day === day
+                )];
+            },
+            onSelect: function (dateText, datePickerInstance) {
+                const selectedDate = new Date(dateText);
+                const dayOfWeek = selectedDate.getDay();
 
-        const matchedSchedule = selectableDays.find(schedule =>
-            Array.isArray(schedule.day) ? schedule.day.includes(dayOfWeek) : schedule.day === dayOfWeek
-        );
+                const matchedSchedule = selectableDays.find(schedule =>
+                    Array.isArray(schedule.day) ? schedule.day.includes(dayOfWeek) : schedule.day === dayOfWeek
+                );
 
-        if (matchedSchedule) {
-            const timeList = document.getElementById('time');
-            timeList.innerHTML = "";  // 기존에 있는 시간 목록을 지웁니다.
+                if (matchedSchedule) {
+                    const timeList = document.getElementById('time');
+                    timeList.innerHTML = "";  // 기존에 있는 시간 목록을 지웁니다.
 
-            matchedSchedule.times.forEach(time => {
-                const timeItem = document.createElement('li');
+                    matchedSchedule.times.forEach(time => {
+                        const timeItem = document.createElement('li');
 
-                // 여기서 남은 좌석을 계산합니다. 
-                const reservedSeats = Math.floor(Math.random() * 51);
-                const remainingSeats = 50 - reservedSeats;
+                        // 여기서 남은 좌석을 계산합니다. 
+                        const reservedSeats = Math.floor(Math.random() * 51);
+                        const remainingSeats = 50 - reservedSeats;
 
-                const timeLink = document.createElement('a');
-                timeLink.href = "#";  // 여기에 원하는 링크를 넣으실 수 있습니다.
-                timeLink.textContent = `${time} (남은 좌석: ${remainingSeats}/50)`; // 시간과 남은 좌석 수 표시
+                        const timeLink = document.createElement('a');
+                        timeLink.href = "#";  // 여기에 원하는 링크를 넣으실 수 있습니다.
+                        timeLink.textContent = `${time} (남은 좌석: ${remainingSeats}/50)`; // 시간과 남은 좌석 수 표시
 
-                timeItem.appendChild(timeLink);
-                timeList.appendChild(timeItem);
-            });
+                        timeItem.appendChild(timeLink);
+                        timeList.appendChild(timeItem);
+                    });
 
 
-            document.querySelectorAll("#time li a").forEach(link => {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    document.querySelectorAll("#time li a").forEach(innerLink => innerLink.classList.remove('selected'));
-                    this.classList.add('selected');
+                    document.querySelectorAll("#time li a").forEach(link => {
+                        link.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            document.querySelectorAll("#time li a").forEach(innerLink => innerLink.classList.remove('selected'));
+                            this.classList.add('selected');
 
-                    const mt20id = document.querySelector("#titleContainer div a.selected").dataset.mt20id;
-                    console.log(mt20id);
-                });
-            });
-        }
-    }
-});
-
-document.getElementById('next').addEventListener('click', function () {
-    const selectedMovieLink = document.querySelector("#titleContainer div a.selected");
-    if (selectedMovieLink) {
-        const mt20id = selectedMovieLink.dataset.mt20id;
-        window.location.href = `reservation_seats.html?mt20id=${mt20id}`;
-    } else {
-        alert("영화를 선택해주세요.");
-    }
-});
-
-document.addEventListener("DOMContentLoaded", async function () {
-    const titleContainer = document.getElementById('titleContainer');
-    const url = titleContainer.dataset.xmlurl;
-    const xmlData = await fetchXML(url);
-    const items = xmlData.querySelectorAll('db');
-
-    items.forEach(item => {
-        const div = document.createElement('div');
-        div.classList.add('col-md-4');
-
-        const a = document.createElement('a');
-        a.href = "#";
-        a.textContent = item.querySelector('prfnm').textContent;
-        a.dataset.mt20id = item.querySelector('mt20id').textContent;
-
-        div.appendChild(a);
-        titleContainer.appendChild(div);
-    });
-
-    document.querySelectorAll("#titleContainer div a").forEach(link => {
-        link.addEventListener("click", async function (event) {
-            event.preventDefault();
-            document.querySelectorAll("#titleContainer div a").forEach(innerLink => innerLink.classList.remove('selected'));
-            this.classList.add('selected');
-
-            const mt20id = this.dataset.mt20id;
-            const detailDataXML = await fetchXML(`http://www.kopis.or.kr/openApi/restful/pblprfr/${mt20id}?service=b0a82e699a254319bbe6decc02de2489`);
-
-            const prloc = detailDataXML.querySelector('fcltynm').textContent;
-            document.getElementById('location').innerHTML = prloc;
-
-            const prfpdfromNode = detailDataXML.querySelector('prfpdfrom');
-            const prfpdtoNode = detailDataXML.querySelector('prfpdto');
-            if (prfpdfromNode && prfpdtoNode) {
-                const fromDate = new Date(prfpdfromNode.textContent);
-                const toDate = new Date(prfpdtoNode.textContent);
-                $("#datepicker").datepicker("option", "minDate", fromDate);
-                $("#datepicker").datepicker("option", "maxDate", toDate);
-            }
-
-            const dtguidanceNode = detailDataXML.querySelector('dtguidance');
-            if (dtguidanceNode) {
-                const scheduleData = extractSchedule(dtguidanceNode.textContent);
-                selectableDays = scheduleData;
+                            const mt20id = document.querySelector("#titleContainer div a.selected").dataset.mt20id;
+                            console.log(mt20id);
+                        });
+                    });
+                }
             }
         });
-    });
-});
 
-async function fetchXML(url) {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Network response was not ok");
-    const text = await response.text();
-    const parser = new DOMParser();
-    return parser.parseFromString(text, "text/xml");
-}
-</script>
+        document.getElementById('next').addEventListener('click', function () {
+            const selectedMovieLink = document.querySelector("#titleContainer div a.selected");
+            if (selectedMovieLink) {
+                const mt20id = selectedMovieLink.dataset.mt20id;
+                window.location.href = `reservation_seats.html?mt20id=${mt20id}`;
+            } else {
+                alert("영화를 선택해주세요.");
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            const titleContainer = document.getElementById('titleContainer');
+            const url = titleContainer.dataset.xmlurl;
+            const xmlData = await fetchXML(url);
+            const items = xmlData.querySelectorAll('db');
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.classList.add('col-md-4');
+
+                const a = document.createElement('a');
+                a.href = "#";
+                a.textContent = item.querySelector('prfnm').textContent;
+                a.dataset.mt20id = item.querySelector('mt20id').textContent;
+
+                div.appendChild(a);
+                titleContainer.appendChild(div);
+            });
+
+            document.querySelectorAll("#titleContainer div a").forEach(link => {
+                link.addEventListener("click", async function (event) {
+                    event.preventDefault();
+                    document.querySelectorAll("#titleContainer div a").forEach(innerLink => innerLink.classList.remove('selected'));
+                    this.classList.add('selected');
+
+                    const mt20id = this.dataset.mt20id;
+                    const detailDataXML = await fetchXML(`http://www.kopis.or.kr/openApi/restful/pblprfr/${mt20id}?service=b0a82e699a254319bbe6decc02de2489`);
+
+                    const prloc = detailDataXML.querySelector('fcltynm').textContent;
+                    document.getElementById('location').innerHTML = prloc;
+
+                    const prfpdfromNode = detailDataXML.querySelector('prfpdfrom');
+                    const prfpdtoNode = detailDataXML.querySelector('prfpdto');
+                    if (prfpdfromNode && prfpdtoNode) {
+                        const fromDate = new Date(prfpdfromNode.textContent);
+                        const toDate = new Date(prfpdtoNode.textContent);
+                        $("#datepicker").datepicker("option", "minDate", fromDate);
+                        $("#datepicker").datepicker("option", "maxDate", toDate);
+                    }
+
+                    const dtguidanceNode = detailDataXML.querySelector('dtguidance');
+                    if (dtguidanceNode) {
+                        const scheduleData = extractSchedule(dtguidanceNode.textContent);
+                        selectableDays = scheduleData;
+                    }
+                });
+            });
+        });
+
+        async function fetchXML(url) {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Network response was not ok");
+            const text = await response.text();
+            const parser = new DOMParser();
+            return parser.parseFromString(text, "text/xml");
+        }
+    </script>
 
 </body>

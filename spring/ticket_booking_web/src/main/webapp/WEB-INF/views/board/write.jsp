@@ -1,110 +1,228 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ page session="false"%>
-<!DOCTYPE html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <title>게시글 작성</title>
+
+<!-- mobile responsive meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- ** Plugins Needed for the Project ** -->
+<!-- Bootstrap -->
+
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/plugins/bootstrap/bootstrap.min.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/plugins/fontawesome/css/all.css">
+
+<!-- Main Stylesheet -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/style.css">
+
+
+<!--Favicon-->
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon">
+<link rel="icon"
+	href="${pageContext.request.contextPath}/resources/images/favicon.png"
+	type="image/x-icon">
+<!-- style -->
+
 <style>
 .head {
 	text-align: center;
 	font-size: 36px;
 }
+
+.top-right {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.top-right a {
+	color: aliceblue;
+}
 </style>
 </head>
 <body>
-	<!-- 	<h1>게시글 작성</h1>
-	<form action="write" method="post">
-		<label>제목: <input type="text" name="title"></label><br> <label>작성자:<input
-			type="text" name="username"></label><br> <label>내용: <textarea
-				name="content" rows="10" cols="50"></textarea></label><br> <input
-			type="submit" value="작성하기">
-	</form> -->
-	<h1 class=head>글쓰기</h1>
-	<form id="writeForm" action="/app/board/write" method="post">
+	<!-- 소통페이지 -->
+	<!-- START preloader-wrapper -->
+	<div class="preloader-wrapper">
+		<div class="preloader-inner">
+			<div class="spinner-border text-red"></div>
+		</div>
+	</div>
+	<!-- END preloader-wrapper -->
 
-		<select name="bulletin" id="titleContainer"
-			data-xmlurl="http://www.kopis.or.kr/openApi/restful/pblprfr?service=b0a82e699a254319bbe6decc02de2489&stdate=20230901&eddate=20230910&cpage=1&rows=5&prfstate=02&signgucode=11&signgucodesub=1111&kidstate=Y">
-			<option value="free">자유</option>
-		</select>
-		<h6>
-			제목 <input type="text" name='title' placeholder="제목을 입력해 주세요"
-				style="width: 100%" required>
-		</h6>
-		<h6>
-			내용
-			<textarea name="content" class="content" rows="8" style="width: 100%"
-				placeholder="내용을 50자 이상 입력해 주세요." required></textarea>
-			<br> <span style="color: #aaa;" id="counter">
-				<p class="count">0</p>/ 최대 2000자
-			</span>
-		</h6>
-		<h6>
-			작성자 <input type="text" name="username" placeholder="작성자"
-				style="width: 100%" required>
-		</h6>
-		<!-- /.box-body -->
-		<button type="submit" class="btnSave">새글등록</button>
-	</form>
-	<button class="btnCancel" onclick="location.href='/app/board/list'">취소</button>
-</body>
-<script
-	src="${pageContext.request.contextPath}/resources/plugins/jQuery/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/plugins/bootstrap/bootstrap.min.js"></script>
-<!-- 메인 스크립트 -->
-<script src="${pageContext.request.contextPath}/resources/js/script.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/imageModule.js"></script>
-<script>
-	$(document).ready(function() {
-		var fObject = $(".form");
+	<!-- START main-wrapper -->
+	<section class="d-flex">
 
-		$(".btnCancel").on("click", function() {
+		<!-- start of sidenav -->
+		<aside>
+			<div
+				class="sidenav position-sticky d-flex flex-column justify-content-between">
+				<a class="navbar-brand" href="/app/" class="logo"> <%-- <img src="${pageContext.request.contextPath}/resources/images/logo.png" 
+					alt=""> --%> <img src="<c:url value='/resources/images/logo.png'/>"
+					alt="">
+				</a>
+				<!-- end of navbar-brand -->
 
-			fObject.attr("method", "get");
-			fObject.attr("action", "/app/board/list");
-			fObject.submit();
+				<div class="navbar navbar-dark my-4 p-0 font-primary">
+					<ul class="navbar-nav w-100">
+						<li class="nav-item active"><a
+							class="nav-link text-white px-0 pt-0" href="/app/">Home</a></li>
+						<li class="nav-item "><a class="nav-link text-white px-0"
+							href="store">스토어</a></li>
+						<li class="nav-item "><a class="nav-link text-white px-0"
+							href="/app/board/list">소통공간</a></li>
+						<li class="nav-item  accordion">
+							<div id="drop-menu" class="drop-menu collapse">
+								<a class="d-block " href="reservation">예매하기</a> <a
+									class="d-block " href="/app/playList">전체 공연</a> <a
+									class="d-block " href="/app/user/listAll">예매현황</a>
+							</div> <a class="nav-link text-white" href="#!" role="button"
+							data-toggle="collapse" data-target="#drop-menu"
+							aria-expanded="false" aria-controls="drop-menu">예매하기</a>
+						</li>
+						<li class="nav-item "><a class="nav-link text-white px-0"
+							href="###">MyPage</a></li>
+					</ul>
+				</div>
+				<!-- end of navbar -->
+				<br>
+			</div>
+		</aside>
+		<div class="top-right">
+			<c:choose>
+				<c:when test="${empty userses}">
+					<span><a href="/app/user/login">로그인</a></span> &nbsp; <span><a
+						href="/app/user/linkRegister">등록</a></span>
+				</c:when>
+				<c:otherwise>
+					<span>${userses.username}!</span> &nbsp; <span><a
+						href="/app/user/logout">로그아웃</a></span>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<!-- end of sidenav -->
+		<!-- -------------------------------------------------------------------------------------------------------------------------------------- -->
+		<div class="main-content">
 
-		})
-		$(".btnSave").on("click", function() {
-			fObject.attr("method", "post");
-			fObject.attr("action", "/app/board/edit");
-			fObject.submit();
-		})
+			<header class="mobile-nav pt-4">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-6">
+							<a href="home"> <%-- <img
+								src="${pageContext.request.contextPath}/resources/images/logo.png"
+								alt=""> --%> <img src="<c:url value='/images/logo.png'/>" alt="">
+							</a>
+						</div>
+						<div class="col-6 text-right">
+							<button class="nav-toggle bg-transparent border text-white">
+								<span class="fas fa-bars"></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</header>
+			<div class="nav-toggle-overlay"></div>
+			<div class="container py-4 my-5">
+				<h1 class=head>글쓰기</h1>
+				<form id="writeForm" action="/app/board/write" method="post">
+					<input type='hidden' name='user_id' value="${userses.id}">
+					<select name="bulletin" id="titleContainer"
+						data-xmlurl="http://www.kopis.or.kr/openApi/restful/pblprfr?service=b0a82e699a254319bbe6decc02de2489&stdate=20230901&eddate=20230910&cpage=1&rows=5&prfstate=02&signgucode=11&signgucodesub=1111&kidstate=Y">
+						<option value="free">자유</option>
+					</select>
+					<h6>
+						제목 <input type="text" name='title' placeholder="제목을 입력해 주세요"
+							style="width: 100%" required>
+					</h6>
+					<h6>
+						내용
+						<textarea name="content" class="content" rows="8"
+							style="width: 100%" placeholder="내용을 50자 이상 입력해 주세요." required></textarea>
+						<br> <span style="color: #aaa;" id="counter">
+							<p class="count">0</p>/ 최대 2000자
+						</span>
+					</h6>
+					<h6>
+						작성자 <input type="text" name="username" value="${userses.username}"
+							style="width: 100%" readonly="readonly" required>
+					</h6>
+					<!-- /.box-body -->
+					<button type="submit" class="btnSave">새글등록</button>
+				</form>
+				<button class="btnCancel" onclick="location.href='/app/board/list'">취소</button>
+			</div>
+		</div>
+	</section>
+	<!-- END main-wrapper -->
+	<!-- 	---------------------------------------------------------------------------------------------------------------------------------------------- -->
+	<!-- All JS Files -->
+	<script
+		src="${pageContext.request.contextPath}/resources/plugins/jQuery/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/plugins/bootstrap/bootstrap.min.js"></script>
+	<!-- 메인 스크립트 -->
+	<script src="${pageContext.request.contextPath}/resources/js/script.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/js/imageModule.js"></script>
+	<script>
+		$(document).ready(function() {
+			var fObject = $(".form");
 
-	});
+			$(".btnCancel").on("click", function() {
 
-	function bytesHandler(obj) {
-		var text = $(obj).val();
-		$('p.bytes').text(getTextLength(text));
-	}
-	$(document).ready(function() {
-		$("textarea").keyup(function() {
-			var inputLength = $(this).val().length;
-			if (inputLength > 2000)
-				alert("더이상 입력할 수 없습니다.");
-			var remain = 2000 - inputLength;
-			$(".count").html(remain);
+				fObject.attr("method", "get");
+				fObject.attr("action", "/app/board/list");
+				fObject.submit();
+
+			})
+			$(".btnSave").on("click", function() {
+				fObject.attr("method", "post");
+				fObject.attr("action", "/app/board/edit");
+				fObject.submit();
+			})
+
 		});
-	});
-	/* --- */
-	document.addEventListener("DOMContentLoaded", function() {
-		fetchAndDisplayTitle().then(function(data) {
-			var titleContainer = document.getElementById('titleContainer');
 
-			data.forEach(function(item) {
-				var option = document.createElement('option');
-				option.value = item.title.trim(); // 여기에서 실제 값을 지정
-				option.textContent = item.title; // 여기에서 제목을 가져옴
-				console.log(item.title);
-				titleContainer.appendChild(option);
+		function bytesHandler(obj) {
+			var text = $(obj).val();
+			$('p.bytes').text(getTextLength(text));
+		}
+		$(document).ready(function() {
+			$("textarea").keyup(function() {
+				var inputLength = $(this).val().length;
+				if (inputLength > 2000)
+					alert("더이상 입력할 수 없습니다.");
+				var remain = 2000 - inputLength;
+				$(".count").html(remain);
 			});
 		});
-	});
-</script>
+		/* --- */
+		document.addEventListener("DOMContentLoaded", function() {
+			fetchAndDisplayTitle().then(function(data) {
+				var titleContainer = document.getElementById('titleContainer');
+
+				data.forEach(function(item) {
+					var option = document.createElement('option');
+					option.value = item.title.trim(); // 여기에서 실제 값을 지정
+					option.textContent = item.title; // 여기에서 제목을 가져옴
+					console.log(item.title);
+					titleContainer.appendChild(option);
+				});
+			});
+		});
+	</script>
+</body>
 </html>

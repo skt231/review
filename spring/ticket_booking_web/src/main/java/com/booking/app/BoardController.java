@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.booking.dto.BoardDto;
 import com.booking.dto.PageDto;
+import com.booking.dto.userDto;
 import com.booking.service.BoardService;
 
 @Controller
@@ -85,21 +87,15 @@ public class BoardController {
 
 	// 게시글 작성 처리
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(BoardDto board, RedirectAttributes rttr) throws Exception {
+	public String write(BoardDto board, RedirectAttributes rttr, userDto user, HttpSession session, Model model)
+			throws Exception {
 		rttr.addFlashAttribute("msg", "success");
+		user = (userDto) session.getAttribute("user");
+		model.addAttribute("user", user);
 		service.insertBoard(board);
 		return "redirect:board/list";
 	}
 
-	/*
-	 * // 게시글 수정 페이지로 이동
-	 * 
-	 * @RequestMapping(value = "/edit", method = RequestMethod.GET) public String
-	 * editForm(@RequestParam("board_id") int board_id, @ModelAttribute("board")s,3
-	 * BoardDto board, PageDto page, Model model) throws Exception {
-	 * logger.info("mod GEt..."); System.out.println(page);
-	 * model.addAttribute("board_id", board_id); return "/board/edit"; }
-	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public void modifyGet(@RequestParam("board_id") int board_id, @RequestParam("title") String title,
 			@RequestParam("content") String content, @RequestParam("username") String username, PageDto page,
@@ -113,18 +109,6 @@ public class BoardController {
 
 	}
 
-	// 게시글 수정 처리
-	/*
-	 * @RequestMapping(value = "/edit", method = RequestMethod.POST) public String
-	 * edit(@ModelAttribute BoardDto board, PageDto page, RedirectAttributes rttr)
-	 * throws Exception { service.updateBoard(board); logger.info("mod post...");
-	 * rttr.addAttribute("page", page.getPage()); rttr.addAttribute("perPageNum",
-	 * page.getPerPageNum()); rttr.addAttribute("searchType", page.getSearchType());
-	 * rttr.addAttribute("keyword", page.getKeyword());
-	 * rttr.addFlashAttribute("msg", "success"); return
-	 * "redirect:/board/view?board_id=" + board.getBoard_id(); return
-	 * "redirect:/board/list"; }
-	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String modifyPost(HttpServletRequest request, @RequestParam("content") String content, BoardDto board,
 			PageDto page, Model model, RedirectAttributes rttr) throws Exception {
@@ -164,6 +148,7 @@ public class BoardController {
 		model.addAttribute("title", board.getTitle());
 		model.addAttribute("indent", board.getIndent());
 		model.addAttribute("depthno", board.getDepthno());
+		model.addAttribute("bulletin", board.getBulletin());
 
 	}
 
