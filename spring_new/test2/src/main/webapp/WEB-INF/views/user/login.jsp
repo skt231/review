@@ -22,7 +22,7 @@
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token }" />
 		<p>
-			<label for="id">아이디</label> <input type="text" id="id" name="id" />
+			<label for="username">아이디</label> <input type="text" id="username" name="username" />
 		</p>
 		<p>
 			<label for="password">비밀번호</label> <input type="password"
@@ -40,8 +40,8 @@
 			<p>로그아웃 하였습니다.</p>
 		</c:if>
 		<p>
-			<label for="username">아이디</label> <input type="text" id="id"
-				name="id" />
+			<label for="username">아이디</label> <input type="text" id="username"
+				name="username" />
 		</p>
 		<p>
 			<label for="password">비밀번호</label> <input type="password"

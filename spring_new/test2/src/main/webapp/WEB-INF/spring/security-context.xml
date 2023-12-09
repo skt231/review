@@ -21,7 +21,7 @@
 			authentication-success-handler-ref="loginSuccess"
 			default-target-url="/user/user"
 			authentication-failure-url="/user/login?error"
-			username-parameter="id" password-parameter="password" />
+			username-parameter="username" password-parameter="password" />
 		<logout logout-url="/user/logout" invalidate-session="true" />
 		<!--해댕주소로오면 session이 지워지고 로그아웃이 진행됨 -->
 		<access-denied-handler error-page="/user/error" />
@@ -34,17 +34,18 @@
             users-by-username-query="select username, password, enabled from users where username = ?"
             authorities-by-username-query="select username, authority from authorities where username = ?" />
     </authentication-provider>
-</authentication-manager>
+</authentication-manager> 
 
-<!-- 	<authentication-manager>
+<!--  	<authentication-manager>
 		<authentication-provider>
 			<user-service>
 				<user name="member" password="1234" authorities="ROLE_MEMBER" />
 				<user name="admin" password="1234" authorities="ROLE_ADMIN,ROLE_MEMBER" />
+				<user name="user" password="1234" authorities="ROLE_USER" />
 			</user-service>
 		</authentication-provider>
-	</authentication-manager> -->
-</beans:beans>
+	</authentication-manager>--> 
+</beans:beans> 
 
 
 

@@ -30,6 +30,8 @@ public class LoginRedirectHandler implements AuthenticationSuccessHandler {
 		if(roleNames.contains("ROLE_MEMBER")) {
 			response.sendRedirect("/te/member/member");
 			return;
+		}else {
+			response.sendRedirect("/te/user/user");
 		}
 
 	}
