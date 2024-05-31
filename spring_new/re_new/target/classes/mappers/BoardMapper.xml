@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sub.dao.IHealthDao">
+<insert id="insert">
+insert into health_management(name,age,height,weight,bmi,bmi_note) values(#{name},#{age},#{height},#{weight},#{bmi},#{bmi_note})
+</insert>
+<select id="selectAll" resultType="BoardDto">
+select * from health_management
+</select>
+<select id="selectName" resultType="BoardDto">
+select * from health_management where name=#{name}
+</select>
+<update id="update">
+update health_management set weight=#{weight} where name=#{name}
+</update>
+<delete id="delete">
+delete health_management where name=#{name}
+</delete>
+</mapper>
